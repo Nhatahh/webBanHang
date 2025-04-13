@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+}
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.navbar {
+  background-color: #000000;
+  box-shadow: 0px 5px 15px #000000;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+}
+.navbar-nav .nav-link:hover {
+  color: #ffc107 !important;
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+.dropdown-menu {
+  background-color: black;
+  border: #ffc107 1px solid;
+}
+.dropdown-menu .dropdown-item {
+  color: white !important;
+}
+.dropdown-menu .dropdown-item:hover {
+  color: #ffc107 !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.social-icons,
+.nav-icons {
+  display: flex;
+  gap: 20px;
+}
+.nav-icons a {
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+}
+.nav-icons a:hover {
+  color: #ffcc00;
+  transform: scale(1.3);
+  transition: transform 0.3s ease-in-out;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.content {
+  width: 80%;
+  margin: auto;
+}
+
+.contact a {
+  text-decoration: none;
+  color: black;
+}
+.contact a:hover {
+  color: #2679ff;
+  transform: scale(1.3);
+  transition: transform 0.3s ease-in-out;
+}
+
+.membership {
+  margin-bottom: 3px;
+}
+
+.signup:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.link_detail {
+  text-decoration: none;
+  color: black;
+}
+
+.card_sanpham:hover {
+  border: 1px solid rgba(0, 47, 255, 0.678);
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.quantity-container {
+  width: auto;
+  min-width: 80px;
+  max-width: 130px;
+}
+
+.thanhtoan {
+  background-color: #041e3a;
+}
+.thanhtoan:hover {
+  background-color: #153456;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: black;
+}
