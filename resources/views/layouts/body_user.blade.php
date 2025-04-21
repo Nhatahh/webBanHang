@@ -20,16 +20,13 @@
 <body>
 
     {{-- Nav --}}
-    @include('layouts.header')
+    @include('layouts.header_user')
 
     {{-- Nội dung chính --}}
-    <!-- <div class="main-content container mt-4">
-        @yield('content')
-    </div> -->
     @yield('content')
 
     {{-- Footer --}}
-    @include('layouts.footer')
+    @include('layouts.footer_user')
 
     {{-- JS --}}
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
