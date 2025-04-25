@@ -45,7 +45,7 @@ Route::prefix('user')->group(function () {
 
     Route::get('/chinhsach', [UserController::class, 'chinhsach'])->name('user.chinhsach');
 
-    Route::get('/chitiet', [UserController::class, 'chitiet'])->name('user.chitiet');
+    Route::get('/chitiet/{id}', [UserController::class, 'chitiet'])->name('user.chitiet');
 
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
 

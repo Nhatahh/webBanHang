@@ -10,7 +10,7 @@
       <div class="row justify-content-around align-items-center mt-4">
         @foreach($sanphams as $sp)
         <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-          <a href="{{ route('user.chitiet') }}" class="link_detail"
+          <a href="{{ route('user.chitiet', ['id' => $sp->sp_id]) }}" class="link_detail"
             ><img
               src="{{ asset('images/' . $sp->hinhanh) }}"
               class="card-img-top"

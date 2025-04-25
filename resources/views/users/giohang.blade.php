@@ -22,7 +22,7 @@
               <div class="col-8 d-flex align-items-center">
                 <div class="w-100">
                   <a
-                    href="{{ route('user.chitiet') }}"
+                    href="{{ route('user.chitiet', ['id' => $item->sp_id]) }}"
                     style="color: black; text-decoration: none"
                     ><b>{{ $item->tensp }}</b></a
                   >

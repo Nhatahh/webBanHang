@@ -15,7 +15,7 @@
           <p><b>Trực tuyến:</b> Chuyển khoản</p>
           <p><b>MB Bank:</b> 0372576944</p>
           <img
-            src="../images/maQR.png"
+            src="{{ asset('images/maQR.jpg') }}"
             alt="Ma QR"
             style="width: 25vh; height: 25vh"
           />

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Psy\Readline\Hoa\Console;
 
 
 class UserController extends Controller
@@ -34,8 +35,12 @@ class UserController extends Controller
             ->get();
         return view('users.quan', compact('sanphams'));
     }
-    public function chitiet() {
-        return view('users.chitietsanpham');
+    public function chitiet($id) {
+        $chitiet = DB::table('sanpham')
+            ->where('sanpham.sp_id', $id)
+            ->first();
+        $trimmedArray = array_map('trim', explode('.', $chitiet->mota));
+        return view('users.chitietsanpham',compact('chitiet', 'trimmedArray'));
     }
     public function dangky() {
         return view('users.dangky');
@@ -54,6 +59,7 @@ class UserController extends Controller
                 'sp.tensp',
                 'sp.hinhanh as hinhanh',
                 'sp.gia as gia',
+                'sp.gia as sp_id',
                 'size.ten as size', 
                 'gh.soluong as soluong'
             )
