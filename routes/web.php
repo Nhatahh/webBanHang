@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\AdminController;
 */
 
 Route::get('/', function () {
-    return view('users.index');
+    return redirect()->route('user.home'); 
 });
 
 Route::prefix('admin')->group(function () {
@@ -39,11 +39,26 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::get('/home', [UserController::class, 'index'])->name('home.index');
+    Route::get('/home', [UserController::class, 'home'])->name('user.home');
 
+    Route::get('/ao', [UserController::class, 'ao'])->name('user.ao');
 
+    Route::get('/chinhsach', [UserController::class, 'chinhsach'])->name('user.chinhsach');
 
+    Route::get('/chitiet', [UserController::class, 'chitiet'])->name('user.chitiet');
 
+    Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
 
+    Route::get('/dangnhap', [UserController::class, 'dangnhap'])->name('user.dangnhap');
+
+    Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
+
+    Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
+
+    Route::get('/ptthanhtoan', [UserController::class, 'ptthanhtoan'])->name('user.ptthanhtoan');
+
+    Route::get('/quan', [UserController::class, 'quan'])->name('user.quan');
+
+    Route::get('/tatcasp', [UserController::class, 'tatcasp'])->name('user.tatcasp');
 
 });
