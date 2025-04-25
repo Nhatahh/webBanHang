@@ -25,7 +25,7 @@
         }
 
         .navbar {
-            background-color:#384289;
+            background-color: #384289;
         }
 
         /* Main content */
@@ -127,10 +127,6 @@
                                     <input type="text" class="form-control" id="productName">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="category" class="form-label">Danh mục</label>
-                                    <input type="text" class="form-control" id="category">
-                                </div>
-                                <div class="mb-3">
                                     <label for="price" class="form-label">Giá</label>
                                     <input type="text" class="form-control" id="price">
                                 </div>
@@ -152,7 +148,6 @@
                                     <thead>
                                         <tr>
                                             <th>Tên sản phẩm</th>
-                                            <th>Phân loại</th>
                                             <th>Giá</th>
                                             <th>Kho</th>
                                             <th>Trạng thái</th>
@@ -161,7 +156,6 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td>1234</td>
@@ -175,7 +169,6 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
                                             <td><span class="het-hang">Hết hàng</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
@@ -183,7 +176,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -197,7 +189,6 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
                                             <td><span class="het-hang">Hết hàng</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
@@ -208,7 +199,6 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
                                             <td><span class="con-hang">Còn hàng</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
@@ -216,7 +206,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>

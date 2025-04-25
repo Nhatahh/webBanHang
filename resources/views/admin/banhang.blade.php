@@ -25,7 +25,7 @@
         }
 
         .navbar {
-            background-color:#384289;
+            background-color: #384289;
         }
 
         /* Main content */
@@ -123,20 +123,20 @@
                         <div class="form-container mb-4">
                             <form>
                                 <div class="mb-3">
+                                    <label for="productName" class="form-label">Tên khách hàng</label>
+                                    <input type="text" class="form-control" id="productName">
+                                </div>
+                                <div class="mb-3">
                                     <label for="productName" class="form-label">Tên sản phẩm</label>
                                     <input type="text" class="form-control" id="productName">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="category" class="form-label">Danh mục</label>
-                                    <input type="text" class="form-control" id="category">
+                                    <label for="price" class="form-label">Số lượng</label>
+                                    <input type="number" class="form-control" id="price">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">Giá</label>
-                                    <input type="text" class="form-control" id="price">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="quantity" class="form-label">Số lượng</label>
-                                    <input type="number" class="form-control" id="quantity">
+                                    <label for="price" class="form-label">Ngày đặt</label>
+                                    <input type="date" class="form-control" id="price">
                                 </div>
                                 <button type="submit" class="btn btn-danger add-btn">Thêm</button>
                             </form>
@@ -146,81 +146,76 @@
                     <!-- Table Column -->
                     <div class="col-md-8">
                         <div class="table-container">
-                            <h5 class="mb-3">DANH SÁCH SẢN PHẨM</h5>
+                            <h5 class="mb-3">DANH SÁCH ĐƠN HÀNG</h5>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>ID</th>
+                                            <th>Tên tài khoản</th>
                                             <th>Tên sản phẩm</th>
-                                            <th>Phân loại</th>
-                                            <th>Giá</th>
-                                            <th>Kho</th>
+                                            <th>Số lượng</th>
+                                            <th>Tổng tiền</th>
                                             <th>Trạng thái</th>
                                             <th>Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>1234</td>
-                                            <td><span class="con-hang">Còn hàng</span></td>
+                                            <td>1</td>
+                                            <td>Võ Kiều My</td>
+                                            <td>Áo thun</td>
+                                            <td>3</td>
+                                            <td>300.000đ</td>
+                                            <td><span class="con-hang">Đang giao</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
                                                 <a href="#" class="btn btn-danger">Xóa</a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="het-hang">Hết hàng</span></td>
+                                            <td>1</td>
+                                            <td>Võ Kiều My</td>
+                                            <td>Áo thun</td>
+                                            <td>3</td>
+                                            <td>300.000đ</td>
+                                            <td><span class="con-hang">Đang giao</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
                                                 <a href="#" class="btn btn-danger">Xóa</a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="con-hang">Còn hàng</span></td>
+                                            <td>1</td>
+                                            <td>Võ Kiều My</td>
+                                            <td>Áo thun</td>
+                                            <td>3</td>
+                                            <td>300.000đ</td>
+                                            <td><span class="con-hang">Đang giao</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
                                                 <a href="#" class="btn btn-danger">Xóa</a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="het-hang">Hết hàng</span></td>
+                                            <td>1</td>
+                                            <td>Võ Kiều My</td>
+                                            <td>Áo thun</td>
+                                            <td>3</td>
+                                            <td>300.000đ</td>
+                                            <td><span class="con-hang">Đang giao</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
                                                 <a href="#" class="btn btn-danger">Xóa</a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="con-hang">Còn hàng</span></td>
-                                            <td class="btn-con">
-                                                <a href="#" class="btn btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-danger">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="het-hang">Hết hàng</span></td>
+                                            <td>1</td>
+                                            <td>Võ Kiều My</td>
+                                            <td>Áo thun</td>
+                                            <td>3</td>
+                                            <td>300.000đ</td>
+                                            <td><span class="con-hang">Đang giao</span></td>
                                             <td class="btn-con">
                                                 <a href="#" class="btn btn-primary">Sửa</a>
                                                 <a href="#" class="btn btn-danger">Xóa</a>

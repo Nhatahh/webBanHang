@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,31 @@ Route::get('/', function () {
     return view('users.index');
 });
 
-Route::get('/admin', function () {
-    return view('admin.index');
+Route::prefix('admin')->group(function () {
+    Route::get('/home', [AdminController::class, 'home'])->name('admin.home');
+
+    Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
+
+    Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
+
+    Route::get('/khuyenmai', [AdminController::class, 'khuyenmai'])->name('admin.khuyenmai');
+
+    Route::get('/magiamgia', [AdminController::class, 'magiamgia'])->name('admin.magiamgia');
+
+    Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
+
+    Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
+
+    Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
+
+});
+
+Route::prefix('user')->group(function () {
+    Route::get('/home', [UserController::class, 'index'])->name('home.index');
+
+
+
+
+
+
 });
