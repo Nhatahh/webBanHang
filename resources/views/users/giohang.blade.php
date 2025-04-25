@@ -29,25 +29,12 @@
                   <p><small>Size: {{ $item->size }}</small></p>
                   <p>{{ number_format($item->gia, 0, ',', ',') }} VND</p>
                   <div class="input-group quantity-container float-start">
-                    <button
-                      class="btn btn-outline-secondary btn-minus"
-                      type="button"
-                    >
-                      -
-                    </button>
-                    <input
-                      type="text"
-                      class="form-control text-center quantity-input"
-                      value="1"
-                    />
-                    <button
-                      class="btn btn-outline-secondary btn-plus"
-                      type="button"
-                    >
-                      +
-                    </button>
+                      <button class="btn btn-outline-secondary btn-minus" type="button">-</button>
+                      <input type="text" class="form-control text-center quantity-input" value="{{ $item->soluong }}"
+                          data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" />
+                      <button class="btn btn-outline-secondary btn-plus" type="button">+</button>
                   </div>
-                  <button id="btn-removeSingle" data-id="${row.id}" class="btn removeSingle float-end" style="padding: 0">
+                  <button id="btn-removeSingle" data-id="" class="btn removeSingle float-end" style="padding: 0">
                       <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
                   </button><br><br>
                 </div>
@@ -56,14 +43,8 @@
           </div>
         </div>
         <div class="col-md-12 col-lg-4">
-          <div
-            class="card rounded-0 border-0"
-            style="background-color: #f8f8f8"
-          >
-            <h5
-              class="card-header rounded-0 border-0 p-4"
-              style="border: none; background-color: #f0eeed"
-            >
+          <div class="card rounded-0 border-0" style="background-color: #f8f8f8">
+            <h5 class="card-header rounded-0 border-0 p-4" style="border: none; background-color: #f0eeed">
               Tóm tắt đơn hàng
             </h5>
             <div class="card-body">
@@ -75,20 +56,15 @@
                   <b>Tổng cộng</b>
                 </div>
                 <div class="col-6">
-                  <p>2,500,000VNĐ</p>
+                  <p>{{ number_format($tam_tinh, 0, ',', '.') }} VNĐ</p>
                   <p>0VNĐ</p>
-                  <p>35,000VNĐ</p>
-                  <b>2,535,000VNĐ</b>
+                  <p>{{ number_format($phi_ship, 0, ',', '.') }} VNĐ</p>
+                  <b>{{ number_format($tong_tien, 0, ',', '.') }} VNĐ</b>
                 </div>
               </div>
             </div>
-            <div
-              class="card-footer p-3"
-              style="border: none; background-color: #f8f8f8"
-            >
-              <a href="#" class="thanhtoan btn btn-primary w-100 rounded-0"
-                >Thanh toán</a
-              >
+            <div class="card-footer p-3" style="border: none; background-color: #f8f8f8">
+              <a href="#" class="thanhtoan btn btn-primary w-100 rounded-0">Thanh toán</a>
             </div>
           </div>
         </div>

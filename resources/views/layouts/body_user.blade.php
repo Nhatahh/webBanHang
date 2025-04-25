@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'Web Ban Hang')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/style1.css') }}">
@@ -44,6 +45,7 @@
     {{-- JS --}}
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/web.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 
     @stack('scripts') {{-- Cho phép trang con đẩy thêm JS nếu cần --}}
 </body>

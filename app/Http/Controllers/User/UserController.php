@@ -59,13 +59,24 @@ class UserController extends Controller
                 'sp.tensp',
                 'sp.hinhanh as hinhanh',
                 'sp.gia as gia',
-                'sp.gia as sp_id',
+                'sp.sp_id as sp_id',
                 'size.ten as size', 
+                'size.size_id as size_id', 
                 'gh.soluong as soluong'
             )
             ->get();
-        return view('users.giohang', compact('items'));
+
+        $tam_tinh = 0;
+        foreach ($items as $item) {
+            $tam_tinh += $item->gia * $item->soluong;
+        }
+        $phi_ship = 35000;
+        $tong_tien = $tam_tinh + $phi_ship;
+
+
+        return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien'));
     }
+
     public function membership() {
         return view('users.membership');
     }
