@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\AdminController;
 Route::get('/', function () {
     return redirect()->route('user.home'); 
 });
-
+// hwhwehwhe
 Route::prefix('admin')->group(function () {
     Route::get('/home', [AdminController::class, 'home'])->name('admin.home');
 
