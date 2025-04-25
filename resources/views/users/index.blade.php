@@ -6,6 +6,7 @@
 <!-- Body -->
 <div class="content">
   <div class="container-fluid mt-4" style="height: auto">
+    <!-- Slider Banner -->
     <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-indicators">
         <button
@@ -32,21 +33,21 @@
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
-            src="./images/banner1.png"
+            src="{{ asset('images/banner1.jpg') }}"
             class="d-block w-100"
             alt="banner1"
           />
         </div>
         <div class="carousel-item">
           <img
-            src="./images/banner2.png"
+            src="{{ asset('images/banner2.jpg') }}"
             class="d-block w-100"
             alt="banner2"
           />
         </div>
         <div class="carousel-item">
           <img
-            src="./images/banner3.png"
+            src="{{ asset('images/banner3.jpg') }}"
             class="d-block w-100"
             alt="banner3"
           />
@@ -69,131 +70,27 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
       </button>
     </div>
+    <!-- Hien thi san pham -->
     <div class="row justify-content-around align-items-center mt-4">
-      <div
-        class="card card_sanpham shadow col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
-        style="width: 18rem"
-      >
-        <a href="./pages/chitietsanpham.html" class="link_detail"
-          ><img
-            src="./images/aokhoac1.jpeg"
-            class="card-img-top"
-            alt="aokhoac1"
-          />
-          <div class="card-body">
-            <h5 class="card-title">SSMA LOGO ZIP HOODIE - GREY</h5>
-            <p class="card-text">1,200,000VNĐ</p>
-          </div></a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
-          >Thêm vào giỏ hàng</a
-        >
-      </div>
+      @foreach($sanphams as $sp)
       <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-        <a href="./pages/chitietsanpham.html" class="link_detail"
+        <a href="{{ route('user.chitiet') }}" class="link_detail"
           ><img
-            src="./images/aothun1.jpeg"
+            src="{{ asset('images/' . $sp->hinhanh) }}"
             class="card-img-top"
-            alt="aothun1"
+            alt="{{ $sp->tensp }}"
           />
           <div class="card-body">
-            <h5 class="card-title">HOLIDAY24 BASIC T-SHIRT - WHITE</h5>
-            <p class="card-text">550,000VNĐ</p>
-          </div> </a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
-          >Thêm vào giỏ hàng</a
-        >
-      </div>
-      <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-        <a href="./pages/chitietsanpham.html" class="link_detail"
-          ><img
-            src="./images/polo1.jpeg"
-            class="card-img-top"
-            alt="polo1"
-          />
-          <div class="card-body">
-            <h5 class="card-title">SSMA CORE POLO SHIRT - GRAY</h5>
-            <p class="card-text">750,000VNĐ</p>
+            <h5 class="card-title">{{ $sp->tensp }}</h5>
+            <p class="card-text">{{ number_format($sp->gia, 0, ',', ',') }} VND</p>
           </div></a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
+        ><a href="{{ route('user.giohang') }}" class="btn btn-outline-danger mb-3"
           >Thêm vào giỏ hàng</a
         >
       </div>
-      <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-        <a href="./pages/chitietsanpham.html" class="link_detail"
-          ><img
-            src="./images/somi1.jpeg"
-            class="card-img-top"
-            alt="somi1"
-          />
-          <div class="card-body">
-            <h5 class="card-title">FALL24 OFFROAD SHIRT - PINK</h5>
-            <p class="card-text">750,000VNĐ</p>
-          </div></a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
-          >Thêm vào giỏ hàng</a
-        >
-      </div>
-      <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-        <a href="./pages/chitietsanpham.html" class="link_detail"
-          ><img
-            src="./images/quanshort1.jpeg"
-            class="card-img-top"
-            alt="quanshort1"
-          />
-          <div class="card-body">
-            <h5 class="card-title">SSMA CORE CANVAS SHORTS - WHITE</h5>
-            <p class="card-text">750,000VNĐ</p>
-          </div></a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
-          >Thêm vào giỏ hàng</a
-        >
-      </div>
-      <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-        <a href="./pages/chitietsanpham.html" class="link_detail"
-          ><img
-            src="./images/quanshort2.jpeg"
-            class="card-img-top"
-            alt="quanshort2"
-          />
-          <div class="card-body">
-            <h5 class="card-title">FW24 WASHED CARGO JORTS - BLACK</h5>
-            <p class="card-text">990,000VNĐ</p>
-          </div></a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
-          >Thêm vào giỏ hàng</a
-        >
-      </div>
-      <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-        <a href="./pages/chitietsanpham.html" class="link_detail"
-          ><img
-            src="./images/quandai1.jpeg"
-            class="card-img-top"
-            alt="quandai1"
-          />
-          <div class="card-body">
-            <h5 class="card-title">SSMA MMF SWEAT PANTS - BLACK</h5>
-            <p class="card-text">1,100,000VNĐ</p>
-          </div></a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
-          >Thêm vào giỏ hàng</a
-        >
-      </div>
-      <div class="card card_sanpham shadow col-4 mb-4" style="width: 18rem">
-        <a href="./pages/chitietsanpham.html" class="link_detail"
-          ><img
-            src="./images/jean1.jpeg"
-            class="card-img-top"
-            alt="jean1"
-          />
-          <div class="card-body">
-            <h5 class="card-title">HOLIDAY24 DESTROYED JEANS - BLUE</h5>
-            <p class="card-text">1,790,000VNĐ</p>
-          </div></a
-        ><a href="./pages/giohang.html" class="btn btn-outline-danger mb-3"
-          >Thêm vào giỏ hàng</a
-        >
-      </div>
+      @endforeach
     </div>
+    <!-- Phan trang -->
     <div class="pagination d-flex justify-content-end">
       <nav aria-label="Page navigation example">
         <ul class="pagination">

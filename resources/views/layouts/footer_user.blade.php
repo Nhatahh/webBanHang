@@ -25,7 +25,7 @@
     </div>
     <div class="col-12 col-md-6 mb-3 logo d-flex justify-content-around">
         <img
-        src="{{ asset('images/logo2.png') }}"
+        src="{{ asset('images/logo2.jpg') }}"
         alt="logo"
         width="150vh"
         height="150vh"
@@ -34,6 +34,6 @@
     </div>
     <hr />
     <div class="text-center fst-italic mt-3 mb-3">
-    Copyright © 2025 NHATAHH by Bùi Hữu Nhật
+        Copyright © 2025 NHATAHH by Bùi Hữu Nhật
     </div>
 </footer>
