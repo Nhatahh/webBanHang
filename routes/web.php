@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-<<<<<<< Updated upstream
+
     return view('welcome');
-=======
+
     return redirect()->route('user.home'); 
 });
 
@@ -64,5 +64,5 @@ Route::prefix('user')->group(function () {
 
     Route::get('/tatcasp', [UserController::class, 'tatcasp'])->name('user.tatcasp');
 
->>>>>>> Stashed changes
+
 });
