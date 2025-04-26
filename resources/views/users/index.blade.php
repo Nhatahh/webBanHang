@@ -1,4 +1,4 @@
-@extends('layouts.body_user')
+@extends('layouts.user.body')
 
 @section('title', 'Trang Chủ')
 

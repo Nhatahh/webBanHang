@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style1.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
     <!-- Bootstrap từ local -->
     <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -31,13 +31,13 @@
 <body>
 
     {{-- Nav --}}
-    @include('layouts.header_user')
+    @include('layouts.admin.header')
 
     {{-- Nội dung chính --}}
     @yield('content')
 
     {{-- Footer --}}
-    @include('layouts.footer_user')
+    @include('layouts.admin.footer')
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -48,7 +48,8 @@
     {{-- JS --}}
     @stack('scripts') {{-- Cho phép trang con đẩy thêm JS nếu cần --}}
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
     <script src="{{ asset('js/web.js') }}"></script>
 
     <!-- Toastr JS -->
