@@ -7,7 +7,7 @@
     <div class="col-md-10 main-content">
         <div class="row">
             <!-- Form Column -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-container mb-4">
                     <form>
                         <div class="mb-3">
@@ -32,72 +32,11 @@
             </div>
 
             <!-- Table Column -->
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="table-container">
                     <h5 class="mb-3">DANH SÁCH TÀI KHOẢN</h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Tên tài khoản</th>
-                                    <th>Phân loại</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                            </tbody>
+                        <table class="table table-bordered table-hover table-striped" style="width: 100%" id="dsTaikhoan">
                         </table>
                     </div>
                 </div>

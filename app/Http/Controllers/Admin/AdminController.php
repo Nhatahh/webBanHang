@@ -18,6 +18,15 @@ class AdminController extends Controller
     public function danhmuc() {
         return view('admin.danhmuc');
     }
+    //Load dữ liệu vào bảng dsDM
+    function loadDM() {
+        $data = DB::table('theloai')            
+        ->orderBy('theloai.tl_id','desc')
+        ->select('theloai.*')
+        ->get();
+
+        return response()->json(['data' => $data]);
+    }
     public function khuyenmai() {
         return view('admin.khuyenmai');
     }
@@ -27,8 +36,29 @@ class AdminController extends Controller
     public function sanpham() {
         return view('admin.sanpham');
     }
+    //Load dữ liệu vào bảng dsSP
+    function loadSP() {
+        $data = DB::table('sanpham')            
+        ->leftJoin('theloai', 'theloai.tl_id', 'sanpham.tl_id')
+        ->select('sanpham.*', 'theloai.ten as tentheloai')
+        ->orderBy('sanpham.sp_id','desc')
+        ->get();
+
+        return response()->json(['data' => $data]);
+    }
     public function taikhoan() {
         return view('admin.taikhoan');
+    }
+    //Load dữ liệu vào bảng dsTK
+    function loadTK() {
+        $data = DB::table('taikhoan')            
+        ->leftJoin('quyen', 'quyen.quyen_id', 'taikhoan.quyen_id')
+        ->leftJoin('trangthai', 'trangthai.tt_id', 'taikhoan.tt_id')
+        ->select('taikhoan.*', 'quyen.ten as tenquyen', 'trangthai.ten as tentrangthai')
+        ->orderBy('taikhoan.user_id','desc')
+        ->get();
+
+        return response()->json(['data' => $data]);
     }
     public function thongke() {
         return view('admin.thongke');

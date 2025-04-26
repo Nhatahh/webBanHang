@@ -22,16 +22,19 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
+    Route::get('/loadTK', [AdminController::class, 'loadTK'])->name('admin.loadTK');
 
     Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
 
     Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
+    Route::get('/loadDM', [AdminController::class, 'loadDM'])->name('admin.loadDM');
 
     Route::get('/khuyenmai', [AdminController::class, 'khuyenmai'])->name('admin.khuyenmai');
 
     Route::get('/magiamgia', [AdminController::class, 'magiamgia'])->name('admin.magiamgia');
 
     Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
+    Route::get('/loadSP', [AdminController::class, 'loadSP'])->name('admin.loadSP');
 
     Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
 
