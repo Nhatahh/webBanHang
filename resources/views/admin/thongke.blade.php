@@ -157,12 +157,9 @@
                         <br>
                         <h4>Doanh thu theo tháng</h4>
                         
-<canvas id="myChart" style="width:100%;"></canvas>
+                        <canvas id="myChart" style="width:100%;"></canvas>
 
                     </div>
-
-                    
-
                 </div>
             </div>
         </div>
