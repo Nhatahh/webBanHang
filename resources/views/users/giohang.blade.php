@@ -31,7 +31,7 @@
                   <div class="input-group quantity-container float-start">
                       <button class="btn btn-outline-secondary btn-minus" type="button">-</button>
                       <input type="text" class="form-control text-center quantity-input" value="{{ $item->soluong }}"
-                          data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" />
+                          data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" data-gia="{{ $item->gia }}" readonly />
                       <button class="btn btn-outline-secondary btn-plus" type="button">+</button>
                   </div>
                   <button id="btn-removeSingle" data-id="" class="btn removeSingle float-end" style="padding: 0">
@@ -56,10 +56,10 @@
                   <b>Tổng cộng</b>
                 </div>
                 <div class="col-6">
-                  <p>{{ number_format($tam_tinh, 0, ',', '.') }} VNĐ</p>
-                  <p>0VNĐ</p>
-                  <p>{{ number_format($phi_ship, 0, ',', '.') }} VNĐ</p>
-                  <b>{{ number_format($tong_tien, 0, ',', '.') }} VNĐ</b>
+                  <p><span id="tamTinh">{{ number_format($tam_tinh, 0, ',', ',') }}</span> VNĐ</p>
+                  <p>0 VNĐ</p>
+                  <p><span id="phiShip">{{ number_format($phi_ship, 0, ',', ',') }}</span> VNĐ</p>
+                  <b><span id="tongTien">{{ number_format($tong_tien, 0, ',', ',') }}</span> VNĐ</b>
                 </div>
               </div>
             </div>
@@ -71,4 +71,7 @@
       </div>
     </div>
   </div>
+  <script>
+      const capNhatGioHangURL = "{{ route('user.giohang.capnhat') }}";
+  </script>
 @endsection
