@@ -51,6 +51,7 @@ Route::prefix('user')->group(function () {
     Route::get('/chinhsach', [UserController::class, 'chinhsach'])->name('user.chinhsach');
 
     Route::get('/chitiet/{id}', [UserController::class, 'chitiet'])->name('user.chitiet');
+    Route::post('/themgiohang', [UserController::class, 'themgiohang'])->name('user.themgiohang');
 
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
     Route::post('/xuly-dangky', [UserController::class, 'xulydangky'])->name('user.xulydangky');

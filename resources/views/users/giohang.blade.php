@@ -31,11 +31,11 @@
                   >
                   <p><small>Size: {{ $item->size }}</small></p>
                   <p>{{ number_format($item->gia, 0, ',', ',') }} VND</p>
-                  <div class="input-group quantity-container float-start">
-                      <button class="btn btn-outline-secondary btn-minus" type="button">-</button>
-                      <input type="number" class="form-control text-center quantity-input" value="{{ $item->soluong }}"
+                  <div class="input-group GH-quantity-container quantity-container float-start">
+                      <button class="btn btn-outline-secondary GH-minus" type="button">-</button>
+                      <input type="number" class="form-control text-center GH-quantity" value="{{ $item->soluong }}"
                           data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" data-gia="{{ $item->gia }}" readonly/>
-                      <button class="btn btn-outline-secondary btn-plus" type="button">+</button>
+                      <button class="btn btn-outline-secondary GH-plus" type="button">+</button>
                   </div>
                   <button id="btn-removeSingle" data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" class="btn removeSingle float-end" style="padding: 0">
                       <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
