@@ -87,12 +87,16 @@
       <div class="col-6 p-3">
         <h1>{{ $chitiet->tensp }}</h1>
         <p class="fs-3">{{ number_format($chitiet->gia, 0, ',', ',') }} VND</p>
+        <form id="formGioHang" action="{{ route('user.themgiohang') }}" method="POST">
+        @csrf 
+        <input type="hidden" name="sp_id" value="{{ $chitiet->sp_id }}">
         <div class="radio-size">
           <input
             type="radio"
             class="btn-check"
-            name="btnradio"
+            name="size"
             id="btnradio1"
+            value="S"
           />
           <label class="btn btn-outline-dark rounded-0" for="btnradio1"
             >Size S</label
@@ -100,8 +104,9 @@
           <input
             type="radio"
             class="btn-check"
-            name="btnradio"
+            name="size"
             id="btnradio2"
+            value="M"
           />
           <label class="btn btn-outline-dark rounded-0" for="btnradio2"
             >Size M</label
@@ -109,8 +114,9 @@
           <input
             type="radio"
             class="btn-check"
-            name="btnradio"
+            name="size"
             id="btnradio3"
+            value="L"
           />
           <label class="btn btn-outline-dark rounded-0" for="btnradio3"
             >Size L</label
@@ -123,15 +129,15 @@
           <input
             type="text"
             class="form-control text-center quantity-input"
-            value="1"
+            name="soluong"
+            value=""
           />
           <button class="btn btn-outline-secondary btn-plus" type="button">
             +
           </button>
         </div>
-        <a href="{{ route('user.giohang') }}" class="btn btn-dark"
-          >Thêm vào giỏ hàng</a
-        >
+        <button type="submit" class="btn btn-dark">Thêm vào giỏ hàng</button>
+        </form>
         <hr />
         <img
           src="{{ asset('images/bangsizeaokhoac.jpg') }}"
@@ -147,4 +153,6 @@
     </div>
   </div>
 </div>
+
 @endsection
+@push('scripts')
