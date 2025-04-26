@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,8 +49,10 @@ Route::prefix('user')->group(function () {
     Route::get('/chitiet/{id}', [UserController::class, 'chitiet'])->name('user.chitiet');
 
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
+    Route::post('/xuly-dangky', [UserController::class, 'xulydangky'])->name('user.xulydangky');
 
     Route::get('/dangnhap', [UserController::class, 'dangnhap'])->name('user.dangnhap');
+    Route::post('/xuly-dangnhap', [UserController::class, 'xulydangnhap'])->name('user.xulydangnhap');
 
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
     Route::post('giohang/capnhat', [UserController::class, 'capnhatSoluong'])->name('user.giohang.capnhat'); 
@@ -63,6 +66,8 @@ Route::prefix('user')->group(function () {
     Route::get('/quan', [UserController::class, 'quan'])->name('user.quan');
 
     Route::get('/tatcasp', [UserController::class, 'tatcasp'])->name('user.tatcasp');
+
+    Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 
 });
 

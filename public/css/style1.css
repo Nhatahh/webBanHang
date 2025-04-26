@@ -135,3 +135,26 @@
         transform: rotate(360deg);
     }
 }
+
+#searchResults {
+    overflow-y: auto;
+    display: none;
+    z-index: 9999;
+    max-height: 500px;
+    background-color: #fff;
+    box-shadow: 0 5px 5px rgba(48, 48, 48, 0.582);
+    top: 63px;
+    right: 70px;
+    padding: 10px;
+    border-radius: 8px;
+}
+#searchResults .search-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+#searchResults .search-item:hover {
+    background-color: #b7b7b7;
+}
+.sreach-a{
+    text-decoration: none;
+}
