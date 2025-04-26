@@ -49,7 +49,7 @@ function select2DM() {
 }
 
 //Bảng danh sách tài khoản
-var table = $("#dsTaikhoan").DataTable({
+var tableTK = $("#dsTaikhoan").DataTable({
     ajax: {
         type: "get",
         url: loadTK,
@@ -180,7 +180,7 @@ var table = $("#dsTaikhoan").DataTable({
 });
 
 //Bảng danh sách sản phẩm
-var table = $("#dsSanpham").DataTable({
+var tableSP = $("#dsSanpham").DataTable({
     ajax: {
         type: "get",
         url: loadSP,
@@ -235,9 +235,9 @@ var table = $("#dsSanpham").DataTable({
             render: function (data, type, row) {
                 return `
                     <button id="btn-edit"  class="btn btn-edit" style="padding: 0">
-                        <i style="color: #0000FF;" class="fa-regular fa-pen-to-square" onclick="btn_edit('${row.user_id}')"></i>
+                        <i style="color: #0000FF;" class="fa-regular fa-pen-to-square" onclick="btn_edit('${row.sp_id}')"></i>
                     </button>
-                    <button id="btn-removeSingle" data-id="${row.user_id}" class="btn removeSingle" style="padding: 0">
+                    <button id="btn-removeSingle" data-id="${row.sp_id}" class="btn removeSingle" style="padding: 0">
                         <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
                     </button>`;
             },
@@ -307,8 +307,8 @@ var table = $("#dsSanpham").DataTable({
     },
 });
 
-//Bảng danh sách sản phẩm
-var table = $("#dsDM").DataTable({
+//Bảng danh mục
+var tableDM = $("#dsDM").DataTable({
     ajax: {
         type: "get",
         url: loadDM,
@@ -392,4 +392,90 @@ var table = $("#dsDM").DataTable({
         var stt = page * length + index + 1; // Tính STT
         $("td:eq(0)", row).html(stt); // Gán STT vào cột đầu tiên
     },
+});
+
+//Thêm sản phẩm
+$("#addSP").on("click", function (e) {
+    e.preventDefault();
+
+    let formData = new FormData();
+    formData.append("sanphamInput", $("#sanphamInput").val());
+    formData.append("imgIP", $("#imgIP")[0].files[0]?.name || "");
+    formData.append("motaInput", $("#motaInput").val());
+    formData.append("giaInput", $("#giaInput").val());
+    formData.append("select2DM", $("#select2DM").val());
+    formData.append("tonkhoInput", $("#tonkhoInput").val());
+
+    $.ajax({
+        url: "/addSP",
+        type: "POST",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            switch (response) {
+                case "1":
+                    toastr.success("Thêm sản phẩm thành công!");
+                    tableSP.ajax.reload();
+                    break;
+                case "0":
+                    toastr.error("Thêm sản phẩm thất bại!");
+                    break;
+                case "-1":
+                    toastr.error("Lỗi hệ thống! Vui lòng thử lại sau.");
+                    break;
+                default:
+                    const keys = Object.keys(response);
+                    for (let i = 0; i < keys.length; i++) {
+                        $("#err_" + keys[i]).text(response[keys[i]]);
+                    }
+                    break;
+            }
+        },
+        error: function (xhr) {
+            toastr.error("Gửi dữ liệu thất bại!");
+            console.log(xhr.responseText);
+        },
+    });
+});
+
+$(document).on("click", ".removeSingle", function () {
+    var id = $(this).data("id");
+
+    Swal.fire({
+        title: "Bạn có chắc muốn xóa?",
+        text: "Hành động này không thể hoàn tác!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Có, xóa ngay!",
+        cancelButtonText: "Hủy",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/removeSP/${id}`,
+                type: "DELETE",
+                success: function (response) {
+                    switch (response) {
+                        case "1":
+                            toastr.success("Xóa giấy sản phẩm thành công!");
+                            tableSP.ajax.reload();
+                            break;
+                        case "0":
+                            toastr.warning("Xóa giấy sản phẩm thất bại!");
+                            break;
+                        default:
+                            toastr.error(
+                                "Hệ thống bị lỗi, vui lòng tải lại trang hoặc liên hệ quản trị viên!"
+                            );
+                            break;
+                    }
+                },
+            });
+        }
+    });
 });

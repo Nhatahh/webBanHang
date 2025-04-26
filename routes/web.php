@@ -34,6 +34,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/magiamgia', [AdminController::class, 'magiamgia'])->name('admin.magiamgia');
 
     Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
+    // Route::get('/addSP', [AdminController::class, 'addSP'])->name('admin.addSP');
     Route::get('/loadSP', [AdminController::class, 'loadSP'])->name('admin.loadSP');
 
     Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
@@ -41,7 +42,9 @@ Route::prefix('admin')->group(function () {
 });
 Route::get('/select2Quyen', [AdminController::class, 'select2Quyen'])->name('select2Quyen');
 Route::get('/select2TT', [AdminController::class, 'select2TT'])->name('select2TT');
-Route::get('/select2DM', [AdminController::class, 'select2DM'])->name('select2DM');
+Route::get('/select2DM', [AdminController::class, 'select2DM'])->name('select2DM');  
+Route::post('/addSP', [AdminController::class, 'addSP'])->name('addSP');  
+Route::delete('/removeSP/{id}', [AdminController::class, 'removeSP'])->name('removeSP');  
 
 Route::prefix('user')->group(function () {
     Route::get('/home', [UserController::class, 'home'])->name('user.home');

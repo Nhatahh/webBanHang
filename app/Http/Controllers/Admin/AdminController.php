@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Exception;
+use App\Models\Sanpham;
+
+
 
 
 class AdminController extends Controller
@@ -77,6 +81,60 @@ class AdminController extends Controller
 
         return response()->json(['data' => $data]);
     }
+    //Thêm sản phẩm
+    public function addSP(Request $request) {
+        try {
+            DB::beginTransaction();
+            $maxId = DB::table('sanpham')->max('sp_id');
+            $newId = $maxId + 1;
+            $hinhanhPath = null;
+            $hinhanhName = $request->input('imgIP');
+
+            if (!empty($hinhanhName)) {
+                $hinhanhPath =$hinhanhName;
+            }
+            $data = [
+                'sp_id' => $newId,
+                'tensp' => $request->input('sanphamInput'),
+                'hinhanh' => $hinhanhPath, 
+                'mota' => $request->input('motaInput'),
+                'gia' => $request->input('giaInput'),
+                'tl_id' => $request->input('select2DM'),
+                'tonkho' => $request->input('tonkhoInput'),
+            ];
+            $inserted = DB::table('sanpham')->insert($data);
+            if ($inserted == 1) {
+                DB::commit();
+                return 1;
+            } else {
+                DB::rollBack();
+                return 0;
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return -1;
+        }
+    }
+    public function removeSP($id)
+{
+    try {
+        DB::beginTransaction();
+        $deleted = DB::table('sanpham')
+                    ->where('sp_id', $id)
+                    ->delete();
+        if ($deleted == 1) {
+            DB::commit();
+            return 1;
+        } else {
+            DB::rollBack();
+            return 0;
+        }
+    } catch (Exception $e) {
+        DB::rollBack();
+        return -1;
+    }
+}
+
     public function taikhoan() {
         return view('admin.taikhoan');
     }
@@ -105,4 +163,9 @@ class AdminController extends Controller
     function select2DM(){
         return $this-> load_seclectbox('theloai', 'tl_id', 'ten', 0, '--- Chọn danh mục ---');
     }
+    
+
+
+
+
 }
