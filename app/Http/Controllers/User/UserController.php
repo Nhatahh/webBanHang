@@ -75,9 +75,11 @@ class UserController extends Controller
 
         return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien'));
     }
+
+// Cap nhat so luong san pham
     public function capnhatSoluong(Request $request)
     {
-        $user_id = 'U01'; // Sau này thay bằng session
+        $user_id = 'U01'; 
         $size_id = $request->size;
         $sp_id = $request->sp_id;
         $quantity = $request->quantity;
@@ -93,6 +95,18 @@ class UserController extends Controller
         }
 
         return response()->json(['success' => false]);
+    }
+// Xoa san pham 
+    public function xoaGioHang(Request $request)
+    {
+        $user_id = 'U01';
+        DB::table('giohang')
+            ->where('user_id', $user_id)
+            ->where('sp_id', $request->sp_id)
+            ->where('size_id', $request->size_id)
+            ->delete();
+
+        return response()->json(['success' => true]);
     }
 
     public function membership() {

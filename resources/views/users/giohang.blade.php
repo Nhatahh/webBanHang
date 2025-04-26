@@ -4,6 +4,9 @@
 
 @section('content')
 <!-- Body -->
+  <div id="loading" class="loader" style="display:none;">
+    <div class="spinner"></div>
+  </div>
   <div class="content">
     <div class="container-fluid mt-4 mb-4" style="height: auto">
       <h1>GIỎ HÀNG</h1>
@@ -34,7 +37,7 @@
                           data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" data-gia="{{ $item->gia }}" readonly />
                       <button class="btn btn-outline-secondary btn-plus" type="button">+</button>
                   </div>
-                  <button id="btn-removeSingle" data-id="" class="btn removeSingle float-end" style="padding: 0">
+                  <button id="btn-removeSingle" data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" class="btn removeSingle float-end" style="padding: 0">
                       <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
                   </button><br><br>
                 </div>
@@ -72,6 +75,7 @@
     </div>
   </div>
   <script>
-      const capNhatGioHangURL = "{{ route('user.giohang.capnhat') }}";
+      const updateURL = "{{ route('user.giohang.capnhat') }}";
+      const deleteURL = "{{ route('user.giohang.xoa') }}";
   </script>
 @endsection

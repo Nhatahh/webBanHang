@@ -53,6 +53,8 @@ Route::prefix('user')->group(function () {
 
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
     Route::post('giohang/capnhat', [UserController::class, 'capnhatSoluong'])->name('user.giohang.capnhat'); 
+    Route::post('giohang/xoa', [UserController::class, 'xoaGioHang'])->name('user.giohang.xoa');
+
 
     Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
 
