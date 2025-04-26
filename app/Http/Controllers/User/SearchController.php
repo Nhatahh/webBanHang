@@ -19,7 +19,7 @@ class SearchController extends Controller
         $query = $request->input('query');  
 
         $sanphams = Sanpham::where('tensp', 'like', '%' . $query . '%')
-                           ->get();
+                            ->get();
 
         return response()->json($sanphams);  
     }
