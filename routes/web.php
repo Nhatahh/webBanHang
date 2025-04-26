@@ -51,6 +51,7 @@ Route::prefix('user')->group(function () {
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
 
     Route::get('/dangnhap', [UserController::class, 'dangnhap'])->name('user.dangnhap');
+    
 
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
 
