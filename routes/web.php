@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +17,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
-    return view('welcome');
-
     return redirect()->route('user.home'); 
 });
 
@@ -46,7 +46,7 @@ Route::prefix('user')->group(function () {
 
     Route::get('/chinhsach', [UserController::class, 'chinhsach'])->name('user.chinhsach');
 
-    Route::get('/chitiet', [UserController::class, 'chitiet'])->name('user.chitiet');
+    Route::get('/chitiet/{id}', [UserController::class, 'chitiet'])->name('user.chitiet');
 
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
     Route::post('/xuly-dangky', [UserController::class, 'xulydangky'])->name('user.xulydangky');
@@ -55,6 +55,9 @@ Route::prefix('user')->group(function () {
     Route::post('/xuly-dangnhap', [UserController::class, 'xulydangnhap'])->name('user.xulydangnhap');
 
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
+    Route::post('giohang/capnhat', [UserController::class, 'capnhatSoluong'])->name('user.giohang.capnhat'); 
+    Route::post('giohang/xoa', [UserController::class, 'xoaGioHang'])->name('user.giohang.xoa');
+
 
     Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
 
@@ -64,5 +67,8 @@ Route::prefix('user')->group(function () {
 
     Route::get('/tatcasp', [UserController::class, 'tatcasp'])->name('user.tatcasp');
 
+    Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 
 });
+
+
