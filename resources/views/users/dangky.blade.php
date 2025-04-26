@@ -1,4 +1,4 @@
-@extends('layouts.body_user')
+@extends('layouts.user.body')
 
 @section('title', 'Trang Chủ')
 
@@ -34,7 +34,7 @@
                 placeholder="* Họ và tên"
               />
               @error('fullname')
-                <p id="error-fullname" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+                <p id="error-fullname" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
               @enderror
             </div>
             <div class="form-group mb-2">
@@ -46,7 +46,7 @@
                 placeholder="* Địa Chỉ Email"
               />
               @error('email')
-                <p id="error-email" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+                <p id="error-email" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
               @enderror
             </div>
             <div class="form-group mb-2">
@@ -58,7 +58,7 @@
                 placeholder="* Số điện thoại"
               />
               @error('phone')
-                <p id="error-phone" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+                <p id="error-phone" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
               @enderror
             </div>
             <div class="form-group mb-2">
@@ -69,7 +69,7 @@
                 placeholder="* Mật Khẩu"
               />
               @error('password')
-                <p id="error-password" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+                <p id="error-password" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
               @enderror
             </div>
             <div class="form-group mb-2">
@@ -104,7 +104,7 @@
                 quyền riêng tư của NHATAHH.
               </small>
               @error('agree')
-                <p id="error-agree" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+                <p id="error-agree" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
               @enderror
             </div>
               <button

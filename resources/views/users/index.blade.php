@@ -1,4 +1,4 @@
-@extends('layouts.body_user')
+@extends('layouts.user.body')
 
 @section('title', 'Trang Chủ')
 
@@ -114,8 +114,5 @@
     </div>
   </div>
 </div>
-<script>
-    const updateURL = "{{ route('user.giohang.capnhat') }}";
-    const deleteURL = "{{ route('user.giohang.xoa') }}";
-</script>
+
 @endsection

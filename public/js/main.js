@@ -48,8 +48,9 @@ $(document).on("click", ".btn-minus, .btn-plus", function () {
                 $("#loading").hide();
             },
         });
-    }, 1000);
+    }, 500);
 });
+// Cap nhat tong tien
 function updateTongtien() {
     let total = 0;
     let phiShip = parseInt($("#phiShip").text().replace(/\D/g, "")) || 0;
@@ -105,7 +106,7 @@ $(document).on("click", ".removeSingle", function () {
         }
     });
 });
-
+// Search
 document
     .getElementById("searchForm")
     .addEventListener("submit", function (event) {
@@ -114,7 +115,6 @@ document
         var query = document.getElementById("searchInput").value;
 
         if (query.length > 0) {
-            // Giả sử bạn sẽ gọi một API hoặc tìm kiếm trong danh sách sản phẩm của bạn
             searchProducts(query);
         } else {
             document.getElementById("searchResults").style.display = "none";
@@ -122,9 +122,8 @@ document
     });
 
 function searchProducts(query) {
-    // Gửi yêu cầu AJAX đến server để tìm kiếm sản phẩm
     $.ajax({
-        url: searchURL, // Đổi thành URL của bạn để thực hiện tìm kiếm
+        url: searchURL,
         method: "GET",
         data: { query: query },
         success: function (response) {
@@ -135,7 +134,7 @@ function searchProducts(query) {
         },
     });
 }
-
+// Hien thi ket qua search
 function displaySearchResults(results) {
     var resultsContainer = document.getElementById("searchResults");
     resultsContainer.innerHTML = "";
