@@ -32,7 +32,7 @@
                 <div class="table-container">
                     <h5 class="mb-3">DANH SÁCH SẢN PHẨM</h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table id="sanphamTable" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Tên sản phẩm</th>
@@ -43,66 +43,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>1234</td>
-                                    <td><span class="con-hang">Còn hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="het-hang">Hết hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="con-hang">Còn hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="het-hang">Hết hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="con-hang">Còn hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="het-hang">Hết hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
+                                @foreach ($sanphams as $sp)                        
+                                    <tr>
+                                        <td>{{ $sp->tensp }}</td>
+                                        <td>{{ $sp->gia }}</td>
+                                        <td>{{ $sp->tonkho }}</td>
+                                        <td><span class="con-hang">{{ $sp->tensp }}</span></td>
+                                        <td class="btn-con">
+                                            <a href="#" class="btn btn-primary">Sửa</a>
+                                            <a href="#" class="btn btn-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

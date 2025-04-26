@@ -28,7 +28,8 @@ class AdminController extends Controller
         return view('admin.magiamgia');
     }
     public function sanpham() {
-        return view('admin.sanpham');
+        $sanphams = DB::table('sanpham')->get();
+        return view('admin.sanpham', compact('sanphams'));
     }
     public function taikhoan() {
         return view('admin.taikhoan');

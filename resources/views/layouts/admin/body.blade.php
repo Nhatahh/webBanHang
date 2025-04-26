@@ -51,6 +51,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
     <script src="{{ asset('js/web.js') }}"></script>
+    <script src="{{ asset('js/sanpham.js') }}"></script>
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
