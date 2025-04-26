@@ -9,10 +9,11 @@
             <!-- Form Column -->
             <div class="col-md-3">
                 <div class="form-container mb-4">
-                    <form method="POST" enctype="multipart/form-data" action="">
+                    <form method="" enctype="multipart/form-data" action="">
+                        @csrf
                         <div class="mb-3">
                             <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tên sản phẩm</label>
-                            <input  type="text" class="form-control search" id="" style="height:28px;">
+                            <input  type="text" class="form-control search" id="sanphamInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Hình ảnh</label>
@@ -20,22 +21,26 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Mô tả</label>
-                            <input  type="text" class="form-control search" id="" style="height:28px;">
+                            <input  type="text" class="form-control search" id="motaInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Giá</label>
-                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                            <input  type="number" class="form-control search" id="giaInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tồn kho</label>
-                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                            <input  type="number" class="form-control search" id="tonkhoInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Danh mục</label>
                             <select class="form-control" id="select2DM" onchange="" style="width: 100%;"></select>
                             <span  class="err_del" id="err_select2DM" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
                         </div>
-                        <button type="submit" class="btn btn-danger add-btn">Thêm</button>
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-6">
+                                <button type="button" id="addSP" onclick="" class="btn btn-block btn-primary btn-xs"><i class="fa-solid fa-upload"></i>&nbsp;&nbsp;&nbsp;Thêm</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

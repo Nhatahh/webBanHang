@@ -162,4 +162,66 @@ class UserController extends Controller
         return redirect()->route('user.home')->with('success', 'Đăng ký thành công!');
     }
 
+    public function themgiohang(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'size' => 'required|in:S,M,L',
+                'soluong' => 'required|integer|min:1',
+                'sp_id' => 'required',
+            ]);
+
+            $user_id = 'U01'; // Tạm thời
+            $size_id = [
+                'S' => 'S01',
+                'M' => 'M01',
+                'L' => 'L01',
+            ][$validated['size']];
+
+            $sanpham = DB::table('sanpham')->where('sp_id', $validated['sp_id'])->first();
+
+            if (!$sanpham) {
+                return response()->json(['status' => 'error', 'message' => 'Sản phẩm không tồn tại!']);
+            }
+
+            $cartItem = DB::table('giohang')
+                ->where([
+                    ['user_id', $user_id],
+                    ['sp_id', $validated['sp_id']],
+                    ['size_id', $size_id],
+                ])
+                ->first();
+
+            $tongSoLuong = ($cartItem->soluong ?? 0) + $validated['soluong'];
+
+            if ($tongSoLuong > $sanpham->tonkho) {
+                return response()->json(['status' => 'error', 'message' => 'Hết hàng!']);
+            }
+
+            if ($cartItem) {
+                DB::table('giohang')
+                    ->where('id', $cartItem->id)
+                    ->update(['soluong' => $tongSoLuong]);
+            } else {
+                $gh_id = 'GH' . str_pad(DB::table('giohang')->max('id') + 1, 3, '0', STR_PAD_LEFT);
+
+                DB::table('giohang')->insert([
+                    'gh_id' => $gh_id,
+                    'user_id' => $user_id,
+                    'sp_id' => $validated['sp_id'],
+                    'size_id' => $size_id,
+                    'soluong' => $validated['soluong'],
+                ]);
+            }
+
+            return response()->json(['status' => 'success', 'message' => 'Đã thêm sản phẩm vào giỏ hàng thành công!']);
+
+        } catch (\Exception $e) {
+            
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Có lỗi xảy ra: ' . $e->getMessage(),
+            ]);
+        }
+    }
 }

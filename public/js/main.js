@@ -7,14 +7,14 @@ $(document).ready(function () {
 });
 
 // Cap nhat so luong san pham
-$(document).on("click", ".btn-minus, .btn-plus", function () {
-    let container = $(this).closest(".quantity-container");
-    let input = container.find(".quantity-input");
+$(document).on("click", ".GH-minus, .GH-plus", function () {
+    let container = $(this).closest(".GH-quantity-container");
+    let input = container.find(".GH-quantity");
 
     let quantity = parseInt(input.val()) || 1;
 
-    if ($(this).hasClass("btn-minus") && quantity > 1) quantity--;
-    if ($(this).hasClass("btn-plus")) quantity++;
+    if ($(this).hasClass("GH-minus") && quantity > 1) quantity--;
+    if ($(this).hasClass("GH-plus")) quantity++;
 
     input.val(quantity);
 
@@ -55,7 +55,7 @@ function updateTongtien() {
     let total = 0;
     let phiShip = parseInt($("#phiShip").text().replace(/\D/g, "")) || 0;
 
-    $(".quantity-input").each(function () {
+    $(".GH-quantity").each(function () {
         let gia = parseInt($(this).data("gia")) || 0;
         let soluong = parseInt($(this).val()) || 0;
         total += gia * soluong;
@@ -162,3 +162,59 @@ function displaySearchResults(results) {
         resultsContainer.style.display = "block";
     }
 }
+
+// //thêm giỏ hàng 
+$('#formGioHang').submit(function(e) {
+  e.preventDefault();
+  var sizeSelected = $('input[name="size"]:checked').val();
+  if (!sizeSelected) {
+      toastr.warning('Vui lòng chọn size trước khi thêm vào giỏ hàng.');
+      return false; // Dừng lại, không gửi ajax
+  }
+
+  var formData = $(this).serialize();
+
+  $.ajax({
+      url: $(this).attr('action'),
+      type: 'POST',
+      data: formData,
+      success: function(response) {
+          console.log(response);
+          if (response.status === 'success') {
+              toastr.success(response.message); 
+              setTimeout(function() {
+                window.location.href = giohangURL;
+              }, 1500); 
+          } else if (response.status === 'error') {
+            toastr.warning(response.message); 
+          }
+          else {
+              toastr.error('Có lỗi xảy ra khi thêm vào giỏ hàng.'); 
+          }
+      },
+      error: function(xhr) {
+          toastr.error('Có lỗi xảy ra. Vui lòng thử lại.');
+      }
+  });
+
+  return false;
+});
+$('.CT-quantity').on('input', function() {
+  this.value = this.value.replace(/[^0-9]/g, ''); // Chỉ cho nhập số
+  if (this.value === '0' || this.value === '') {
+      this.value = 1; 
+  }
+});
+// Tăng giảm số lượng
+$('.CT-plus').click(function() {
+  let input = $(this).siblings('.CT-quantity');
+  let value = parseInt(input.val()) || 0;
+  input.val(value + 1);
+});
+$('.CT-minus').click(function() {
+  let input = $(this).siblings('.CT-quantity');
+  let value = parseInt(input.val()) || 0;
+  if (value > 1) {
+    input.val(value - 1);
+  }
+});
