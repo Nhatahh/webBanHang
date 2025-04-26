@@ -7,20 +7,33 @@
     <div class="col-md-10 main-content">
         <div class="row">
             <!-- Form Column -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-container mb-4">
-                    <form>
+                    <form method="POST" enctype="multipart/form-data" action="">
                         <div class="mb-3">
-                            <label for="productName" class="form-label">Tên sản phẩm</label>
-                            <input type="text" class="form-control" id="productName">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tên sản phẩm</label>
+                            <input  type="text" class="form-control search" id="" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Giá</label>
-                            <input type="text" class="form-control" id="price">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Hình ảnh</label>
+                            <input type="file" class="form-control" id="imgIP" name="image" accept="image/*" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="quantity" class="form-label">Số lượng</label>
-                            <input type="number" class="form-control" id="quantity">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Mô tả</label>
+                            <input  type="text" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Giá</label>
+                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tồn kho</label>
+                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Danh mục</label>
+                            <select class="form-control" id="select2DM" onchange="" style="width: 100%;"></select>
+                            <span  class="err_del" id="err_select2DM" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
                         </div>
                         <button type="submit" class="btn btn-danger add-btn">Thêm</button>
                     </form>
@@ -28,82 +41,11 @@
             </div>
 
             <!-- Table Column -->
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="table-container">
                     <h5 class="mb-3">DANH SÁCH SẢN PHẨM</h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Giá</th>
-                                    <th>Kho</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>1234</td>
-                                    <td><span class="con-hang">Còn hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="het-hang">Hết hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="con-hang">Còn hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="het-hang">Hết hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="con-hang">Còn hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><span class="het-hang">Hết hàng</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                            </tbody>
+                        <table class="table table-bordered table-hover table-striped" style="width: 100%" id="dsSanpham">
                         </table>
                     </div>
                 </div>
