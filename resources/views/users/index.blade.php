@@ -114,4 +114,8 @@
     </div>
   </div>
 </div>
+<script>
+    const updateURL = "{{ route('user.giohang.capnhat') }}";
+    const deleteURL = "{{ route('user.giohang.xoa') }}";
+</script>
 @endsection

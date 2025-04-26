@@ -105,3 +105,61 @@ $(document).on("click", ".removeSingle", function () {
         }
     });
 });
+
+document
+    .getElementById("searchForm")
+    .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var query = document.getElementById("searchInput").value;
+
+        if (query.length > 0) {
+            // Giả sử bạn sẽ gọi một API hoặc tìm kiếm trong danh sách sản phẩm của bạn
+            searchProducts(query);
+        } else {
+            document.getElementById("searchResults").style.display = "none";
+        }
+    });
+
+function searchProducts(query) {
+    // Gửi yêu cầu AJAX đến server để tìm kiếm sản phẩm
+    $.ajax({
+        url: searchURL, // Đổi thành URL của bạn để thực hiện tìm kiếm
+        method: "GET",
+        data: { query: query },
+        success: function (response) {
+            displaySearchResults(response);
+        },
+        error: function () {
+            console.log("Lỗi tìm kiếm");
+        },
+    });
+}
+
+function displaySearchResults(results) {
+    var resultsContainer = document.getElementById("searchResults");
+    resultsContainer.innerHTML = "";
+
+    if (results.length > 0) {
+        results.forEach(function (sanphams) {
+            var resultItem = document.createElement("div");
+            resultItem.classList.add("search-item");
+            resultItem.innerHTML = `
+                <a class="sreach-a" href="${linksearchURL}${sanphams.sp_id}" style="color: black;">
+                    <div class="row">
+                        <div class="col-4"><img src="${imgURL}/${sanphams.hinhanh}" alt="${sanphams.tensp}" height="100px" class="me-2" /></div>
+                        <div class="col-8">
+                            <p><strong>${sanphams.tensp}</strong></p>
+                            <p>${sanphams.gia} VND</p>
+                        </div>
+                    </div>
+                </a>
+            `;
+            resultsContainer.appendChild(resultItem);
+        });
+        resultsContainer.style.display = "block";
+    } else {
+        resultsContainer.innerHTML = "<p>Không tìm thấy sản phẩm nào.</p>";
+        resultsContainer.style.display = "block";
+    }
+}

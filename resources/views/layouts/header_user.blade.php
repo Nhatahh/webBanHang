@@ -64,14 +64,14 @@
             </a>
             </li>
         </ul>
-        <form class="d-flex">
+        <form id="searchForm">
             <div class="input-group">
-            <input class="form-control" placeholder="Search" />
-            <button class="btn btn-outline-light" type="submit">
-                <i class="bi bi-search"></i>
-            </button>
+                <input id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm..." />
+                <button class="btn btn-outline-light" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
             </div>
-        </form>
+        </form> 
         <div class="nav-icons mx-3">
             <a href="{{ route('user.giohang') }}"><i class="bi bi-bag"></i></a>
             <a href="{{ route('user.dangnhap') }}"
@@ -80,5 +80,6 @@
         </div>
         </div>
     </div>
+    <div id="searchResults" class="search-results" style="position: absolute;"></div>
     </nav>
 </header>
