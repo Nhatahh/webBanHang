@@ -14,5 +14,55 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+<<<<<<< Updated upstream
     return view('welcome');
+=======
+    return redirect()->route('user.home'); 
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/home', [AdminController::class, 'home'])->name('admin.home');
+
+    Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
+
+    Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
+
+    Route::get('/khuyenmai', [AdminController::class, 'khuyenmai'])->name('admin.khuyenmai');
+
+    Route::get('/magiamgia', [AdminController::class, 'magiamgia'])->name('admin.magiamgia');
+
+    Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
+
+    Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
+
+    Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
+
+});
+
+Route::prefix('user')->group(function () {
+    Route::get('/home', [UserController::class, 'home'])->name('user.home');
+
+    Route::get('/ao', [UserController::class, 'ao'])->name('user.ao');
+
+    Route::get('/chinhsach', [UserController::class, 'chinhsach'])->name('user.chinhsach');
+
+    Route::get('/chitiet', [UserController::class, 'chitiet'])->name('user.chitiet');
+
+    Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
+    Route::post('/xuly-dangky', [UserController::class, 'xulydangky'])->name('user.xulydangky');
+
+    Route::get('/dangnhap', [UserController::class, 'dangnhap'])->name('user.dangnhap');
+    Route::post('/xuly-dangnhap', [UserController::class, 'xulydangnhap'])->name('user.xulydangnhap');
+
+    Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
+
+    Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
+
+    Route::get('/ptthanhtoan', [UserController::class, 'ptthanhtoan'])->name('user.ptthanhtoan');
+
+    Route::get('/quan', [UserController::class, 'quan'])->name('user.quan');
+
+    Route::get('/tatcasp', [UserController::class, 'tatcasp'])->name('user.tatcasp');
+
+>>>>>>> Stashed changes
 });
