@@ -52,6 +52,9 @@ Route::prefix('user')->group(function () {
     Route::get('/dangnhap', [UserController::class, 'dangnhap'])->name('user.dangnhap');
 
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
+    Route::post('giohang/capnhat', [UserController::class, 'capnhatSoluong'])->name('user.giohang.capnhat'); 
+    Route::post('giohang/xoa', [UserController::class, 'xoaGioHang'])->name('user.giohang.xoa');
+
 
     Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
 
@@ -62,3 +65,5 @@ Route::prefix('user')->group(function () {
     Route::get('/tatcasp', [UserController::class, 'tatcasp'])->name('user.tatcasp');
 
 });
+
+

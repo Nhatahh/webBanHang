@@ -59,13 +59,56 @@ class UserController extends Controller
                 'sp.tensp',
                 'sp.hinhanh as hinhanh',
                 'sp.gia as gia',
-                'sp.gia as sp_id',
+                'sp.sp_id as sp_id',
                 'size.ten as size', 
+                'size.size_id as size_id', 
                 'gh.soluong as soluong'
             )
             ->get();
-        return view('users.giohang', compact('items'));
+
+        $tam_tinh = 0;
+        foreach ($items as $item) {
+            $tam_tinh += $item->gia * $item->soluong;
+        }
+        $phi_ship = 35000;
+        $tong_tien = $tam_tinh + $phi_ship;
+
+        return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien'));
     }
+
+// Cap nhat so luong san pham
+    public function capnhatSoluong(Request $request)
+    {
+        $user_id = 'U01'; 
+        $size_id = $request->size;
+        $sp_id = $request->sp_id;
+        $quantity = $request->quantity;
+
+        $updated = DB::table('giohang')
+            ->where('user_id', $user_id)
+            ->where('sp_id', $sp_id)
+            ->where('size_id', $size_id)
+            ->update(['soluong' => $quantity]);
+
+        if ($updated) {
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+// Xoa san pham 
+    public function xoaGioHang(Request $request)
+    {
+        $user_id = 'U01';
+        DB::table('giohang')
+            ->where('user_id', $user_id)
+            ->where('sp_id', $request->sp_id)
+            ->where('size_id', $request->size_id)
+            ->delete();
+
+        return response()->json(['success' => true]);
+    }
+
     public function membership() {
         return view('users.membership');
     }
