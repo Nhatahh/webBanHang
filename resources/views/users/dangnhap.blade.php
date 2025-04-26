@@ -33,7 +33,7 @@
               placeholder="* Địa Chỉ Email"
             />
             @error('email')
-              <p id="error-email" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+              <p id="error-email" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
             @enderror
             <input
               class="form-control mb-3"
@@ -43,7 +43,7 @@
               placeholder="* Mật Khẩu"
             />
             @error('password')
-              <p id="error-password" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+              <p id="error-password" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
             @enderror
             <div class="d-flex justify-content-between mb-3">
               <a href="#" style="text-decoration: none"

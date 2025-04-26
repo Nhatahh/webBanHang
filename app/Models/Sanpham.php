@@ -10,7 +10,7 @@ class Sanpham extends Model
     use HasFactory;
     protected $table = 'sanpham';
     protected $fillable = [
-        'sp_id', 'tensp', 'hinhanh', 'mota', 'gia', 'tl_id', 'tonkho', 'created_at',
+        'tensp', 'hinhanh', 'gia',
     ];
     public $timestamps = true;
 }
