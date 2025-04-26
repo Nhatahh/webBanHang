@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    public function home() {
-        return view('admin.index');
-    }
     public function banhang() {
         return view('admin.banhang');
     }

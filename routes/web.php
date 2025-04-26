@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/home', [AdminController::class, 'home'])->name('admin.home');
+    Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
 
     Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
 
@@ -32,8 +32,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/magiamgia', [AdminController::class, 'magiamgia'])->name('admin.magiamgia');
 
     Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
-
-    Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
 
     Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
 
