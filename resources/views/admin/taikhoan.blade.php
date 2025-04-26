@@ -11,20 +11,38 @@
                 <div class="form-container mb-4">
                     <form>
                         <div class="mb-3">
-                            <label for="productName" class="form-label">Tên tài khoản</label>
-                            <input type="text" class="form-control" id="productName">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tên tài khoản</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="category" class="form-label">Loại tài khoản</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Chọn loại tài khoản</option>
-                                <option value="1">Người dùng</option>
-                                <option value="2">Admin</option>
-                                </select>
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Mật khẩu</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Ghi chú</label>
-                            <input type="text" class="form-control" id="price">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Loại tài khoản</label>
+                            <select class="form-control" id="select2Quyen" onchange="" style="width: 100%;"></select>
+                            <span  class="err_del" id="err_select2Quyen" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Họ tên</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">SĐT</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Địa chỉ</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Email</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Trạng thái</label>
+                            <select class="form-control" id="select2TT" onchange="" style="width: 100%;"></select>
+                            <span  class="err_del" id="err_select2TT" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
                         </div>
                         <button type="submit" class="btn btn-danger add-btn">Thêm</button>
                     </form>

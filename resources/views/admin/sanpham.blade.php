@@ -9,22 +9,31 @@
             <!-- Form Column -->
             <div class="col-md-3">
                 <div class="form-container mb-4">
-                    <form>
+                    <form method="POST" enctype="multipart/form-data" action="">
                         <div class="mb-3">
-                            <label for="productName" class="form-label">Tên sản phẩm</label>
-                            <input type="text" class="form-control" id="productName">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tên sản phẩm</label>
+                            <input  type="text" class="form-control search" id="" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="mota" class="form-label">Mô tả</label>
-                            <input type="text" class="form-control" id="mota">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Hình ảnh</label>
+                            <input type="file" class="form-control" id="imgIP" name="image" accept="image/*" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Giá</label>
-                            <input type="text" class="form-control" id="price">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Mô tả</label>
+                            <input  type="text" class="form-control search" id="" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="quantity" class="form-label">Số lượng</label>
-                            <input type="number" class="form-control" id="quantity">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Giá</label>
+                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tồn kho</label>
+                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Danh mục</label>
+                            <select class="form-control" id="select2DM" onchange="" style="width: 100%;"></select>
+                            <span  class="err_del" id="err_select2DM" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
                         </div>
                         <button type="submit" class="btn btn-danger add-btn">Thêm</button>
                     </form>

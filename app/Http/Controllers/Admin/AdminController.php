@@ -12,6 +12,37 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+    function load_seclectbox($table,$feild_id,$feild_text,$seclected_id,$text_0){
+        $data0 = new Collection([
+            'id' => 0,
+            'text' => $text_0,
+            'selected' =>'selected'
+        ]);
+        $data = DB::table($table)->select($feild_id." as id",$feild_text." as text")->get();
+        $i = 0;
+        foreach ($data as $value) {
+            if($value->id == $seclected_id){
+                $value->selected =  'selected';
+                $i++;
+            }else{
+                $value->selected =  '';
+            }
+        }
+        if( $i == 1){
+            $data[] = new Collection([
+                'id' => 0,
+                'text' => $text_0,
+                'selected' =>''
+            ]);
+        }else{
+            $data[] = new Collection([
+                'id' => 0,
+                'text' => $text_0,
+                'selected' =>'selected'
+            ]);
+        }
+        return $data;
+    }
     public function banhang() {
         return view('admin.banhang');
     }
@@ -64,5 +95,14 @@ class AdminController extends Controller
         return view('admin.thongke');
     }
 
-
+    //Load dữ liệu ban đầu cho Form thêm
+    function select2Quyen(){
+        return $this-> load_seclectbox('quyen', 'quyen_id', 'ten', 0, '--- Chọn quyền ---');
+    }
+    function select2TT(){
+        return $this-> load_seclectbox('trangthai', 'tt_id', 'ten', 0, '--- Chọn trạng thái ---');
+    }
+    function select2DM(){
+        return $this-> load_seclectbox('theloai', 'tl_id', 'ten', 0, '--- Chọn danh mục ---');
+    }
 }

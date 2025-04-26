@@ -4,7 +4,49 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+
+    load_bandau();
 });
+
+function load_bandau() {
+    select2Quyen();
+    select2TT();
+    select2DM();
+}
+
+function select2Quyen() {
+    $.ajax({
+        url: "/select2Quyen",
+        type: "get",
+        success: function (res) {
+            $("#select2Quyen").select2({
+                data: res,
+            });
+        },
+    });
+}
+function select2TT() {
+    $.ajax({
+        url: "/select2TT",
+        type: "get",
+        success: function (res) {
+            $("#select2TT").select2({
+                data: res,
+            });
+        },
+    });
+}
+function select2DM() {
+    $.ajax({
+        url: "/select2DM",
+        type: "get",
+        success: function (res) {
+            $("#select2DM").select2({
+                data: res,
+            });
+        },
+    });
+}
 
 //Bảng danh sách tài khoản
 var table = $("#dsTaikhoan").DataTable({
