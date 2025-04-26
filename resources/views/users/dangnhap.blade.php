@@ -102,13 +102,13 @@
         <div class="d-flex flex-column align-items-center">
           <div class="d-flex justify-content-evenly w-100 w-md-50 w-lg-25 mt-5">
             <a
-              href="./dangnhap.html"
+              href="{{ route("user.dangnhap") }}"
               class="signup active"
               style="text-decoration: none; color: #002ffe"
               ><h2 class="mb-4">ĐĂNG NHẬP</h2></a
             >
             <a
-              href="./dangky.html"
+              href="{{ route("user.dangky") }}"
               class="signup"
               style="text-decoration: none; color: #1c77ff"
               ><h2 class="mb-4">ĐĂNG KÝ</h2></a
@@ -116,17 +116,28 @@
           </div>
           <hr class="w-50" />
           <div class="col-12 col-md-6 col-lg-4">
-            <form action="#">
+            <form action="{{ route('user.xulydangnhap') }}" method="POST" novalidate>
+              @csrf
               <input
                 class="form-control mb-3"
                 type="email"
+                name="email"
+                value="{{ old('email') }}"
                 placeholder="* Địa Chỉ Email"
               />
+              @error('email')
+                <p id="error-email" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+              @enderror
               <input
                 class="form-control mb-3"
                 type="password"
+                name="password"
+                value="{{ old('password') }}"
                 placeholder="* Mật Khẩu"
               />
+              @error('password')
+                <p id="error-password" class="text-danger mb-3 d-flex justify-content-end" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
+              @enderror
               <div class="d-flex justify-content-between mb-3">
                 <a href="#" style="text-decoration: none"
                   ><small id="quenMK" class="text-muted"
@@ -149,14 +160,12 @@
                   Nhớ mật khẩu
                 </small>
               </div>
-              <a href="../index.html"
-                ><button
-                  type="button"
+                <button
+                  type="submit"
                   class="btn btn-outline-primary btn-lg w-100"
                 >
                   Đăng Nhập
-                </button></a
-              >
+                </button>
             </form>
           </div>
         </div>

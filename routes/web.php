@@ -48,8 +48,10 @@ Route::prefix('user')->group(function () {
     Route::get('/chitiet/{id}', [UserController::class, 'chitiet'])->name('user.chitiet');
 
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
+    Route::post('/xuly-dangky', [UserController::class, 'xulydangky'])->name('user.xulydangky');
 
     Route::get('/dangnhap', [UserController::class, 'dangnhap'])->name('user.dangnhap');
+    Route::post('/xuly-dangnhap', [UserController::class, 'xulydangnhap'])->name('user.xulydangnhap');
 
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
     Route::post('giohang/capnhat', [UserController::class, 'capnhatSoluong'])->name('user.giohang.capnhat'); 
