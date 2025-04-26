@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,25 +19,29 @@ use App\Http\Controllers\Admin\AdminController;
 Route::get('/', function () {
     return redirect()->route('user.home'); 
 });
-// hwhwehwhe
+
 Route::prefix('admin')->group(function () {
-    Route::get('/home', [AdminController::class, 'home'])->name('admin.home');
+    Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
+    Route::get('/loadTK', [AdminController::class, 'loadTK'])->name('admin.loadTK');
 
     Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
 
     Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
+    Route::get('/loadDM', [AdminController::class, 'loadDM'])->name('admin.loadDM');
 
     Route::get('/khuyenmai', [AdminController::class, 'khuyenmai'])->name('admin.khuyenmai');
 
     Route::get('/magiamgia', [AdminController::class, 'magiamgia'])->name('admin.magiamgia');
 
     Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
-
-    Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
+    Route::get('/loadSP', [AdminController::class, 'loadSP'])->name('admin.loadSP');
 
     Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
 
 });
+Route::get('/select2Quyen', [AdminController::class, 'select2Quyen'])->name('select2Quyen');
+Route::get('/select2TT', [AdminController::class, 'select2TT'])->name('select2TT');
+Route::get('/select2DM', [AdminController::class, 'select2DM'])->name('select2DM');
 
 Route::prefix('user')->group(function () {
     Route::get('/home', [UserController::class, 'home'])->name('user.home');
@@ -47,13 +52,16 @@ Route::prefix('user')->group(function () {
 
     Route::get('/chitiet/{id}', [UserController::class, 'chitiet'])->name('user.chitiet');
     Route::post('/themgiohang', [UserController::class, 'themgiohang'])->name('user.themgiohang');
-    
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
+    Route::post('/xuly-dangky', [UserController::class, 'xulydangky'])->name('user.xulydangky');
 
     Route::get('/dangnhap', [UserController::class, 'dangnhap'])->name('user.dangnhap');
-    
+    Route::post('/xuly-dangnhap', [UserController::class, 'xulydangnhap'])->name('user.xulydangnhap');
 
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
+    Route::post('giohang/capnhat', [UserController::class, 'capnhatSoluong'])->name('user.giohang.capnhat'); 
+    Route::post('giohang/xoa', [UserController::class, 'xoaGioHang'])->name('user.giohang.xoa');
+
 
     Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
 
@@ -63,4 +71,8 @@ Route::prefix('user')->group(function () {
 
     Route::get('/tatcasp', [UserController::class, 'tatcasp'])->name('user.tatcasp');
 
+    Route::get('/search', [SearchController::class, 'search'])->name('user.search');
+
 });
+
+

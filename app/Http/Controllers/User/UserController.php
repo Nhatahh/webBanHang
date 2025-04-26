@@ -127,34 +127,15 @@ class UserController extends Controller
             ->select(
                 'sp.sp_id as sp_id',
                 'sp.tensp',
-                'sp.hinhanh',
-                'sp.gia',
-                'size.ten as size',
-                'gh.soluong'
+                'sp.hinhanh as hinhanh',
+                'sp.gia as gia',
+                'sp.gia as sp_id',
+                'size.ten as size', 
+                'gh.soluong as soluong'
             )
             ->get();
-    
         return view('users.giohang', compact('items'));
     }
-
-    // public function giohang() {
-    //     $user_id = 'U01'; 
-    //     $items = DB::table('giohang as gh')
-    //         ->leftJoin('taikhoan as tk', 'tk.user_id', '=', 'gh.user_id')
-    //         ->leftJoin('sanpham as sp', 'sp.sp_id', '=', 'gh.sp_id')
-    //         ->leftJoin('size', 'size.size_id', '=', 'gh.size_id')
-    //         ->where('gh.user_id', $user_id)
-    //         ->select(
-    //             'sp.tensp',
-    //             'sp.hinhanh as hinhanh',
-    //             'sp.gia as gia',
-    //             'sp.gia as sp_id',
-    //             'size.ten as size', 
-    //             'gh.soluong as soluong'
-    //         )
-    //         ->get();
-    //     return view('users.giohang', compact('items'));
-    // }
     public function membership() {
         return view('users.membership');
     }
@@ -165,5 +146,47 @@ class UserController extends Controller
         return view('users.chinhsach');
     }
 
+    public function xulydangky(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|regex:/^0[0-9]{9}$/',
+            'password' => 'required|min:3|confirmed',
+        ], [
+            'fullname.required'=> 'Vui lòng nhập họ tên',
+            'email.required'=> 'Vui lòng nhập email',
+            'email.email' => 'Email không đúng định dạng',
+            'phone.required' => 'Bạn chưa nhập số điện thoại',
+            'phone.regex' => 'Số điện thoại không đúng định dạng',
+            'password.required'=> 'Vui lòng nhập password',
+            'password.min'=> 'Mật khẩu tối thiểu 3 ký tự',            
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        return redirect()->route('user.dangnhap')->with('success', 'Đăng ký thành công!');
+    }
+
+
+    public function xulydangnhap(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ], [
+            'email.required'=> 'Vui lòng nhập email',
+            'email.email' => 'Email không đúng định dạng',
+            'password.required'=> 'Vui lòng nhập password',   
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        return redirect()->route('user.home')->with('success', 'Đăng ký thành công!');
+    }
 
 }

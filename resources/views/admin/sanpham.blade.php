@@ -1,230 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <title>Admin</title>
-    <style>
-        /* Sidebar */
-        .sidebar {
-            background-color: #384289;
-            color: white;
-            min-height: calc(100vh - 56px);
-        }
-        .sidebar .nav-link {
-            color: white;
-            padding: 15px;
-        }
-        .sidebar .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        .sidebar-icon {
-            margin-right: 10px;
-        }
+@extends('layouts.admin.body')
 
-        .navbar {
-            background-color: #384289;
-        }
+@section('title', 'Sản Phẩm')
 
-        /* Main content */
-        .btn-con {
-            display: flex;
-            gap: 5px;
-        }
-        .add-btn {
-            background-color: #e53935;
-            border: none;
-        }
-        .add-btn:hover {
-            background-color: #c62828;
-        }
-        .main-content {
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .con-hang {
-            color: #4caf50;
-        }
-        .het-hang {
-            color: #f44336;
-        }
-        .form-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .table-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="bi bi-house-fill"></i>
-                Admin
-            </a>
-        </div>
-    </nav>
-
-    <div class="container-fluid">
+@section('content')
+<!-- Body -->
+    <div class="col-md-10 main-content">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-2 sidebar p-0">
-                <div class="list-group list-group-flush">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-person-fill sidebar-icon"></i>
-                        Quản lý tài khoản
-                    </a>
-                    <a href="#" class="nav-link active">
-                        <i class="bi bi-box-seam sidebar-icon"></i>
-                        Quản lý sản phẩm
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-cart-fill sidebar-icon"></i>
-                        Quản lý đơn hàng
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-folder-fill sidebar-icon"></i>
-                        Quản lý danh mục
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-tag-fill sidebar-icon"></i>
-                        Quản lý đợt khuyến mãi
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-percent sidebar-icon"></i>
-                        Quản lý mã giảm giá
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-bar-chart-fill sidebar-icon"></i>
-                        Thống kê
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-three-dots sidebar-icon"></i>
-                        ...
-                    </a>
+            <!-- Form Column -->
+            <div class="col-md-3">
+                <div class="form-container mb-4">
+                    <form method="POST" enctype="multipart/form-data" action="">
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tên sản phẩm</label>
+                            <input  type="text" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Hình ảnh</label>
+                            <input type="file" class="form-control" id="imgIP" name="image" accept="image/*" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Mô tả</label>
+                            <input  type="text" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Giá</label>
+                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tồn kho</label>
+                            <input  type="number" class="form-control search" id="" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Danh mục</label>
+                            <select class="form-control" id="select2DM" onchange="" style="width: 100%;"></select>
+                            <span  class="err_del" id="err_select2DM" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
+                        </div>
+                        <button type="submit" class="btn btn-danger add-btn">Thêm</button>
+                    </form>
                 </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="col-md-10 main-content">
-                <div class="row">
-                    <!-- Form Column -->
-                    <div class="col-md-4">
-                        <div class="form-container mb-4">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="productName" class="form-label">Tên sản phẩm</label>
-                                    <input type="text" class="form-control" id="productName">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="price" class="form-label">Giá</label>
-                                    <input type="text" class="form-control" id="price">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="quantity" class="form-label">Số lượng</label>
-                                    <input type="number" class="form-control" id="quantity">
-                                </div>
-                                <button type="submit" class="btn btn-danger add-btn">Thêm</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Table Column -->
-                    <div class="col-md-8">
-                        <div class="table-container">
-                            <h5 class="mb-3">DANH SÁCH SẢN PHẨM</h5>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Tên sản phẩm</th>
-                                            <th>Giá</th>
-                                            <th>Kho</th>
-                                            <th>Trạng thái</th>
-                                            <th>Hành động</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td>1234</td>
-                                            <td><span class="con-hang">Còn hàng</span></td>
-                                            <td class="btn-con">
-                                                <a href="#" class="btn btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-danger">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="het-hang">Hết hàng</span></td>
-                                            <td class="btn-con">
-                                                <a href="#" class="btn btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-danger">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="con-hang">Còn hàng</span></td>
-                                            <td class="btn-con">
-                                                <a href="#" class="btn btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-danger">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="het-hang">Hết hàng</span></td>
-                                            <td class="btn-con">
-                                                <a href="#" class="btn btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-danger">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="con-hang">Còn hàng</span></td>
-                                            <td class="btn-con">
-                                                <a href="#" class="btn btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-danger">Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><span class="het-hang">Hết hàng</span></td>
-                                            <td class="btn-con">
-                                                <a href="#" class="btn btn-primary">Sửa</a>
-                                                <a href="#" class="btn btn-danger">Xóa</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <!-- Table Column -->
+            <div class="col-md-9">
+                <div class="table-container">
+                    <h5 class="mb-3">DANH SÁCH SẢN PHẨM</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped" style="width: 100%" id="dsSanpham">
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-Vp6J2FzL8+G8xTc/tzHgDcUYbE6nYmHiOq4p4Iqd1LbXWJNjsYbwZNbbz901yRBR" crossorigin="anonymous"></script>
-</body>
-</html>
+@endsection
