@@ -73,7 +73,7 @@ class UserController extends Controller
         $phi_ship = 35000;
         $tong_tien = $tam_tinh + $phi_ship;
 
-        return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien'));
+        return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien', 'user_id'));
     }
 
 // Cap nhat so luong san pham
@@ -224,4 +224,20 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function thanhtoan(Request $request)
+    {
+        // $user_id = 'U01';
+        DB::table('giohang')
+            ->where('user_id', $request->user_id)
+            ->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+
+
+
+
+
 }

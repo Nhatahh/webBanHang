@@ -67,7 +67,9 @@
               </div>
             </div>
             <div class="card-footer p-3" style="border: none; background-color: #f8f8f8">
-              <a href="#" class="thanhtoan btn btn-primary w-100 rounded-0">Thanh toán</a>
+              <button id="btn-thanhtoan" data-user_id="{{$user_id}}" class="btn thanhtoan w-100 btn-primary">
+                Thanh toán
+              </button>
             </div>
           </div>
         </div>
