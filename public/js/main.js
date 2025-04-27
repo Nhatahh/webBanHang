@@ -4,7 +4,23 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+    load_bandau();
 });
+function load_bandau() {
+    select2PTTT();
+}
+
+function select2PTTT() {
+    $.ajax({
+        url: "/select2PTTT",
+        type: "get",
+        success: function (res) {
+            $("#select2PTTT").select2({
+                data: res,
+            });
+        },
+    });
+}
 
 // Cap nhat so luong san pham
 $(document).on("click", ".GH-minus, .GH-plus", function () {
@@ -221,6 +237,16 @@ $(".CT-minus").click(function () {
 // btn thanh toan
 $(document).on("click", "#btn-thanhtoan", function () {
     let user_id = $(this).data("user_id");
+    let pttt_id = $("#select2PTTT").val();
+
+    if (pttt_id == 0) {
+        Swal.fire(
+            "Thông báo!",
+            "Vui lòng chọn phương thức thanh toán.",
+            "warning"
+        );
+        return;
+    }
 
     Swal.fire({
         title: "Xác nhận đặt hàng?",
@@ -239,6 +265,7 @@ $(document).on("click", "#btn-thanhtoan", function () {
                     method: "POST",
                     data: {
                         user_id: user_id,
+                        pttt_id: pttt_id,
                     },
                     success: function (response) {
                         if (response.status === "success") {

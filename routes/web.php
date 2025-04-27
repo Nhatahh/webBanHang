@@ -84,5 +84,6 @@ Route::prefix('user')->group(function () {
     Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 
 });
+Route::get('/select2PTTT', [UserController::class, 'select2PTTT'])->name('select2PTTT');
 
 
