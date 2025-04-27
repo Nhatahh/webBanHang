@@ -26,6 +26,12 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
 
+    Route::get('/donhang', [AdminController::class, 'donhang'])->name('admin.donhang');
+    Route::get('/donhang/danhsach', [AdminController::class, 'getDanhSach'])->name('admin.donhang.danhsach');
+    Route::get('/chitiet/{dh_id}', [AdminController::class, 'getChiTietDonHang'])->name('admin.donhang.chitiet');
+
+
+
     Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
     Route::get('/loadDM', [AdminController::class, 'loadDM'])->name('admin.loadDM');
 

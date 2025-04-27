@@ -48,6 +48,151 @@ function select2DM() {
     });
 }
 
+function formatCurrency(amount) {
+    return amount.toLocaleString("vi-VN") + " VND";
+}
+
+//Bảng danh sách đơn hàng
+$(document).ready(function () {
+    let DonhangURL = $("#donhang-table").data("url");
+
+    var tableTK = $("#dsDonhang").DataTable({
+        ajax: {
+            type: "GET",
+            url: DonhangURL,
+            dataSrc: "data",
+        },
+        columns: [
+            {
+                // Cột STT
+                title: "STT",
+                data: null,
+            },
+            {
+                title: "dh_id",
+                data: "dh_id",
+            },
+            {
+                title: "tentk",
+                data: "tentk",
+            },
+            {
+                title: "tt",
+                data: "tt",
+            },
+            {
+                title: "phuongthucthanhtoan",
+                data: "phuongthucthanhtoan",
+            },
+            {
+                title: "created_at",
+                data: "created_at",
+            },
+            {
+                title: "Thao tác",
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <button class="btn btn-primary" onclick="loadChiTietDonHang('${row.dh_id}')">
+                            <i class="fa-regular fa-eye"></i> Xem chi tiết
+                        </button>`;
+                },
+            },
+        ],
+        columnDefs: [
+            {
+                targets: 0, // Cột STT
+                className: "dt-body-center",
+            },
+            {
+                targets: 1, // Cột dh_id
+                className: "dt-body-center",
+            },
+            {
+                targets: 2, // Cột tentk
+                className: "dt-body-center",
+            },
+            {
+                targets: 3, // Cột tt
+                className: "dt-body-center",
+            },
+            {
+                targets: 4, // Cột phuongthucthanhtoan
+                className: "dt-body-center",
+            },
+            {
+                targets: 5, // Cột created_at
+                className: "dt-body-center",
+            },
+            {
+                targets: 6, // Cột thao tác
+                className: "dt-body-center",
+            },
+        ],
+        language: {
+            emptyTable: "Không tìm thấy đơn hàng.",
+            info: "_START_ / _END_ trên _TOTAL_ đơn hàng",
+            paginate: {
+                first: "Đầu tiên",
+                last: "Cuối cùng",
+                next: "Trang sau",
+                previous: "Trang trước",
+            },
+            search: "Tìm kiếm:",
+            loadingRecords: "Đang tải dữ liệu...",
+            lengthMenu: "Hiển thị _MENU_ đơn hàng",
+            infoEmpty: "",
+        },
+        retrieve: true,
+        paging: true,
+        lengthChange: true,
+        searching: true,
+        ordering: false,
+        info: true,
+        autoWidth: true,
+        responsive: true,
+        scrollY: 380,
+        order: [[1, "asc"]], // Sắp xếp theo dh_id (cột 1)
+        rowCallback: function (row, data, index) {
+            // Thiết lập STT cho mỗi hàng
+            var pageInfo = this.api().page.info();
+            var page = pageInfo.page; // Trang hiện tại
+            var length = pageInfo.length; // Số hàng mỗi trang
+            var stt = page * length + index + 1; // Tính STT
+            $("td:eq(0)", row).html(stt); // Gán STT vào cột đầu tiên
+        },
+    });
+});
+
+// Hàm load chi tiết đơn hàng khi nhấn vào một dòng
+function loadChiTietDonHang(dh_id) {
+    $.ajax({
+        type: "GET",
+        url: "chitiet/" + dh_id,
+        success: function (response) {
+            let chiTietHTML =
+                '<h5>Danh sách sản phẩm trong đơn hàng</h5><table class="table table-bordered"><thead><tr><th>Tên sản phẩm</th><th>Size</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody>';
+            response.data.forEach(function (item) {
+                chiTietHTML += `
+                    <tr>
+                        <td>${item.tensp}</td>
+                        <td>${item.size}</td>
+                        <td>${item.soluong}</td>
+                        <td>${formatCurrency(item.dongia)}</td>
+                        <td>${formatCurrency(item.thanhtien)}</td>
+                    </tr>`;
+            });
+            chiTietHTML += "</tbody></table>";
+
+            $("#chiTietDonHangModal .modal-body").html(chiTietHTML);
+            $("#chiTietDonHangModal").modal("show");
+        },
+        error: function () {
+            alert("Lỗi khi tải chi tiết đơn hàng.");
+        },
+    });
+}
+
 //Bảng danh sách tài khoản
 var tableTK = $("#dsTaikhoan").DataTable({
     ajax: {
@@ -207,6 +352,9 @@ var tableSP = $("#dsSanpham").DataTable({
         {
             title: "gia",
             data: "gia",
+            render: function (data, type, row) {
+                return formatCurrency(data);
+            },
         },
         {
             title: "tentheloai",
