@@ -462,11 +462,11 @@ $(document).on("click", ".removeSingle", function () {
                 success: function (response) {
                     switch (response) {
                         case "1":
-                            toastr.success("Xóa giấy sản phẩm thành công!");
+                            toastr.success("Xóa sản phẩm thành công!");
                             tableSP.ajax.reload();
                             break;
                         case "0":
-                            toastr.warning("Xóa giấy sản phẩm thất bại!");
+                            toastr.warning("Xóa sản phẩm thất bại!");
                             break;
                         default:
                             toastr.error(
