@@ -130,7 +130,7 @@
             type="text"
             class="form-control text-center CT-quantity"
             name="soluong"
-            value=""
+            value="1"
           />
           <button class="btn btn-outline-secondary CT-plus" type="button">
             +

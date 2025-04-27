@@ -49,7 +49,7 @@ class UserController extends Controller
         return view('users.dangnhap');
     }
     public function giohang() {
-        $user_id = 'U01'; 
+        $user_id = '1'; 
         $items = DB::table('giohang as gh')
             ->leftJoin('taikhoan as tk', 'tk.user_id', '=', 'gh.user_id')
             ->leftJoin('sanpham as sp', 'sp.sp_id', '=', 'gh.sp_id')
@@ -79,7 +79,7 @@ class UserController extends Controller
 // Cap nhat so luong san pham
     public function capnhatSoluong(Request $request)
     {
-        $user_id = 'U01'; 
+        $user_id = '1'; 
         $size_id = $request->size;
         $sp_id = $request->sp_id;
         $quantity = $request->quantity;
@@ -99,7 +99,7 @@ class UserController extends Controller
 // Xoa san pham 
     public function xoaGioHang(Request $request)
     {
-        $user_id = 'U01';
+        $user_id = '1';
         DB::table('giohang')
             ->where('user_id', $user_id)
             ->where('sp_id', $request->sp_id)
@@ -171,7 +171,7 @@ class UserController extends Controller
                 'sp_id' => 'required',
             ]);
 
-            $user_id = 'U01'; // Tạm thời
+            $user_id = '1'; 
             $size_id = [
                 'S' => 'S01',
                 'M' => 'M01',
@@ -203,7 +203,7 @@ class UserController extends Controller
                     ->where('id', $cartItem->id)
                     ->update(['soluong' => $tongSoLuong]);
             } else {
-                $gh_id = 'GH' . str_pad(DB::table('giohang')->max('id') + 1, 3, '0', STR_PAD_LEFT);
+                $gh_id = DB::table('giohang')->max('id') + 1;
 
                 DB::table('giohang')->insert([
                     'gh_id' => $gh_id,
@@ -227,12 +227,71 @@ class UserController extends Controller
 
     public function thanhtoan(Request $request)
     {
-        // $user_id = 'U01';
-        DB::table('giohang')
-            ->where('user_id', $request->user_id)
-            ->delete();
+        $user_id = $request->user_id;
 
-        return response()->json(['success' => true]);
+        DB::beginTransaction();
+
+        try {
+            $gioHangItems = DB::table('giohang')
+                ->where('user_id', $user_id)
+                ->get();
+
+            if ($gioHangItems->isEmpty()) {
+                return response()->json(['status' => 'error', 'message' => 'Giỏ hàng trống!']);
+            }
+
+            $tongTien = 0;
+            foreach ($gioHangItems as $item) {
+                $sanPham = DB::table('sanpham')->where('sp_id', $item->sp_id)->first();
+                $gia = $sanPham->gia;
+                $tongTien += $item->soluong * $gia;
+            }
+
+            $dh_id = DB::table('donhang')->max('dh_id') ?? 0;
+            $newdh_id = $dh_id + 1;
+            $data = [
+                'dh_id' => $newdh_id,
+                'user_id' => $user_id,
+                'tongtien' => $tongTien,
+                'tt_id' => '1',
+                'pttt_id' => '1',
+                'created_at' => now(),
+            ];
+            DB::table('donhang')->insert($data);
+
+            foreach ($gioHangItems as $item) {
+                $sanPham = DB::table('sanpham')
+                    ->where('sp_id', $item->sp_id)
+                    ->first();
+
+                $gia = $sanPham->gia;
+
+                $maxId = DB::table('chitietdonhang')->max('ctdh_id') ?? 0;
+                $newId = $maxId + 1;
+                DB::table('chitietdonhang')->insert([
+                    'ctdh_id' => $newId,
+                    'dh_id' => $newdh_id,
+                    'sp_id' => $item->sp_id,
+                    'size_id' => $item->size_id,
+                    'soluong' => $item->soluong,
+                    'dongia' => $gia,
+                    'thanhtien' => $item->soluong * $gia,
+                ]);
+            }
+
+            // Xóa giỏ hàng sau khi thanh toán
+            DB::table('giohang')
+                ->where('user_id', $user_id)
+                ->delete();
+
+            DB::commit();
+
+            return response()->json(['status' => 'success', 'message' => 'Thanh toán thành công!']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => 'error', 'message' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
+        }
     }
 
 

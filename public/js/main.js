@@ -241,13 +241,21 @@ $(document).on("click", "#btn-thanhtoan", function () {
                         user_id: user_id,
                     },
                     success: function (response) {
-                        Swal.fire(
-                            "Thành công!",
-                            "Đặt hàng thành công!",
-                            "success"
-                        ).then(() => {
-                            location.reload();
-                        });
+                        if (response.status === "success") {
+                            Swal.fire(
+                                "Thành công!",
+                                response.message,
+                                "success"
+                            ).then(() => {
+                                location.reload();
+                            });
+                        } else if (response.status === "error") {
+                            Swal.fire(
+                                "Thông báo!",
+                                response.message,
+                                "warning"
+                            );
+                        }
                     },
                     error: function () {
                         Swal.fire(
