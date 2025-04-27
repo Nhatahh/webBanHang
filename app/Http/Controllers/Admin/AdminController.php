@@ -50,6 +50,9 @@ class AdminController extends Controller
     public function banhang() {
         return view('admin.banhang');
     }
+    public function donhang() {
+        return view('admin.donhang');
+    }
     public function danhmuc() {
         return view('admin.danhmuc');
     }
@@ -163,8 +166,48 @@ class AdminController extends Controller
     function select2DM(){
         return $this-> load_seclectbox('theloai', 'tl_id', 'ten', 0, '--- Chọn danh mục ---');
     }
-    
 
+    public function getDanhSach()
+    {
+        // Lấy danh sách đơn hàng
+        $data = DB::table('donhang as dh')
+            ->leftJoin('taikhoan as tk', 'dh.user_id', '=', 'tk.user_id')
+            ->leftJoin('trangthai as tt', 'dh.tt_id', '=', 'tt.tt_id')
+            ->leftJoin('ptthanhtoan as pt', 'dh.pttt_id', '=', 'pt.pttt_id')
+            ->select(
+                'dh.dh_id as dh_id',
+                'tk.tentk as tentk',
+                'tt.ten as tt',
+                'dh.created_at as created_at',
+                'dh.tongtien as tongtien',
+                'pt.ten as phuongthucthanhtoan'
+            )
+            ->orderBy('dh.dh_id', 'desc')
+            ->get();
+
+        // Trả về dữ liệu dưới dạng JSON
+        return response()->json(['data' => $data]);
+    }
+
+    // Phương thức lấy chi tiết đơn hàng theo dh_id
+    public function getChiTietDonHang($dh_id)
+    {
+        $data = DB::table('chitietdonhang as ctdh')
+        ->leftJoin('sanpham as sp', 'ctdh.sp_id', '=', 'sp.sp_id')
+        ->leftJoin('size', 'ctdh.size_id', '=', 'size.size_id')
+        ->select(
+            'sp.tensp as tensp',
+            'size.ten as size',
+            'ctdh.soluong as soluong',
+            'ctdh.dongia as dongia',
+            'ctdh.thanhtien as thanhtien'
+        )
+        ->where('ctdh.dh_id', $dh_id)
+        ->get();
+
+    // Trả dữ liệu dưới dạng JSON
+    return response()->json(['data' => $data]);
+    }
 
 
 

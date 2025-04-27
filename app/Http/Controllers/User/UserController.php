@@ -13,6 +13,37 @@ use Psy\Readline\Hoa\Console;
 
 class UserController extends Controller
 {
+    function load_seclectbox($table,$feild_id,$feild_text,$seclected_id,$text_0){
+        $data0 = new Collection([
+            'id' => 0,
+            'text' => $text_0,
+            'selected' =>'selected'
+        ]);
+        $data = DB::table($table)->select($feild_id." as id",$feild_text." as text")->get();
+        $i = 0;
+        foreach ($data as $value) {
+            if($value->id == $seclected_id){
+                $value->selected =  'selected';
+                $i++;
+            }else{
+                $value->selected =  '';
+            }
+        }
+        if( $i == 1){
+            $data[] = new Collection([
+                'id' => 0,
+                'text' => $text_0,
+                'selected' =>''
+            ]);
+        }else{
+            $data[] = new Collection([
+                'id' => 0,
+                'text' => $text_0,
+                'selected' =>'selected'
+            ]);
+        }
+        return $data;
+    }
     public function home() {
         $sanphams = DB::table('sanpham')->get();
         return view('users.index', compact('sanphams'));
@@ -228,6 +259,7 @@ class UserController extends Controller
     public function thanhtoan(Request $request)
     {
         $user_id = $request->user_id;
+        $pttt_id = $request->pttt_id; 
 
         DB::beginTransaction();
 
@@ -253,8 +285,8 @@ class UserController extends Controller
                 'dh_id' => $newdh_id,
                 'user_id' => $user_id,
                 'tongtien' => $tongTien,
-                'tt_id' => '1',
-                'pttt_id' => '1',
+                'tt_id' => '2',
+                'pttt_id' => $pttt_id,
                 'created_at' => now(),
             ];
             DB::table('donhang')->insert($data);
@@ -294,6 +326,9 @@ class UserController extends Controller
         }
     }
 
+    function select2PTTT(){
+        return $this-> load_seclectbox('ptthanhtoan', 'pttt_id', 'ten', 0, '--- Chọn phương thức thanh toán ---');
+    }
 
 
 
