@@ -255,7 +255,7 @@ function loadChiTietDonHang(dh_id) {
 }
 
 //Bảng danh sách tài khoản
-var table = $("#dsTaikhoan").DataTable({
+var tableTaikhoan = $("#dsTaikhoan").DataTable({
     ajax: {
         type: "get",
         url: loadTK,
@@ -452,9 +452,49 @@ $(document).ready(function() {
             success: function (response) {
                 if (response.status === "success") {
                     toastr.success("Thêm tài khoản thành công!");
-                    tableTaikhoan.ajax.reload();
+                    table.ajax.reload();
                 } else if (response.status === "fail") {
                     toastr.error("Thêm tài khoản thất bại!");
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    // Bắt lỗi validate
+                    var errors = xhr.responseJSON.errors;
+                    const keys = Object.keys(errors);
+                    for (let i = 0; i < keys.length; i++) {
+                        const field = keys[i];
+                        const messages = errors[field];
+                        $("#err_" + field).text(messages[0]);
+                    }
+                } else {
+                    toastr.error("Có lỗi trong quá trình xử lý!");
+                }
+            }
+        });
+    });
+});
+
+//Thêm danh mục 
+$(document).ready(function() {
+    $("#danhmucForm").submit(function(e) {
+        e.preventDefault();
+        $(".err_del").text("");
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status === "success") {
+                    toastr.success("Thêm danh mục thành công!");
+                    tableDM.ajax.reload();
+                } else if (response.status === "fail") {
+                    toastr.error("Thêm danh mục thất bại!");
                 }
             },
             error: function(xhr) {
@@ -617,7 +657,7 @@ var tableSP = $("#dsSanpham").DataTable({
 });
 
 //Bảng danh sách sản phẩm
-var table = $("#dsDM").DataTable({
+var tableDM = $("#dsDM").DataTable({
     ajax: {
         type: "get",
         url: loadDM,
@@ -744,10 +784,20 @@ $("#addSP").on("click", function (e) {
                     break;
             }
         },
-        error: function (xhr) {
-            toastr.error("Gửi dữ liệu thất bại!");
-            console.log(xhr.responseText);
-        },
+        error: function(xhr) {
+            if (xhr.status === 422) {
+                // Bắt lỗi validate
+                var errors = xhr.responseJSON.errors;
+                const keys = Object.keys(errors);
+                for (let i = 0; i < keys.length; i++) {
+                    const field = keys[i];
+                    const messages = errors[field];
+                    $("#err_" + field).text(messages[0]);
+                }
+            } else {
+                toastr.error("Có lỗi trong quá trình xử lý!");
+            }
+        }
     });
 });
 

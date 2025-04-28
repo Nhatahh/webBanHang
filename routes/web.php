@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
     Route::get('/loadDM', [AdminController::class, 'loadDM'])->name('admin.loadDM');
+    Route::post('/themDM', [AdminController::class, 'themDM'])->name('admin.themDM');
 
     Route::get('/khuyenmai', [AdminController::class, 'khuyenmai'])->name('admin.khuyenmai');
 

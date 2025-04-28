@@ -224,7 +224,7 @@ $(document).ready(function() {
 //Đăng nhập 
 $('#loginForm').on('submit', function(e) {
     e.preventDefault();
-    $(".err_del").text(""); // Xóa lỗi cũ
+    $(".err_del").text(""); 
     $("#errorMessage").text("");
 
     var formData = new FormData(this);
@@ -237,9 +237,11 @@ $('#loginForm').on('submit', function(e) {
         processData: false,
         success: function(response) {
             if(response.status === "success") {
-                window.location.href = '/user/home'; // Luôn chuyển tới user/home
-            } else {
-                $('#errorMessage').text(response.message);
+               if(response.role==="Q02"){
+                    window.location.href='/admin/taikhoan'
+               }else{
+                    window.location.href='/user/home'
+               }
             }
         },
         error: function(xhr) {

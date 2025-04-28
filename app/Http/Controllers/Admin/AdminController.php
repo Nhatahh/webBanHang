@@ -82,6 +82,45 @@ class AdminController extends Controller
     }
     //Thêm sản phẩm
     public function addSP(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'sanphamInput' => 'required|string|min:3|max:100',
+            'imgIP'        => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'motaInput'    => 'required|nullable|string|max:255',
+            'giaInput'     => 'required|numeric|min:0',
+            'tonkhoInput'  => 'required|integer|min:0',
+            'select2DM'    => 'required|not_in:0',
+        ], [
+            // Các lỗi validate
+            'sanphamInput.required' => 'Tên sản phẩm không được để trống!',
+            'sanphamInput.min'      => 'Tên sản phẩm phải ít nhất 3 ký tự!',
+            'sanphamInput.max'      => 'Tên sản phẩm tối đa 100 ký tự!',
+        
+            'imgIP.required'        => 'Vui lòng chọn hình ảnh sản phẩm!',
+            'imgIP.image'           => 'Tệp tải lên phải là hình ảnh!',
+            'imgIP.mimes'           => 'Hình ảnh chỉ chấp nhận các định dạng: jpeg, png, jpg, gif!',
+            'imgIP.max'             => 'Dung lượng ảnh tối đa 2MB!',
+            'motaInput.required'    => 'Mô tả không được để trống!',
+            'motaInput.max'          => 'Mô tả tối đa 255 ký tự!',
+        
+            'giaInput.required'      => 'Giá sản phẩm không được để trống!',
+            'giaInput.numeric'       => 'Giá sản phẩm phải là số!',
+            'giaInput.min'           => 'Giá sản phẩm phải lớn hơn hoặc bằng 0!',
+        
+            'tonkhoInput.required'   => 'Số lượng tồn kho không được để trống!',
+            'tonkhoInput.integer'    => 'Số lượng tồn kho phải là số nguyên!',
+            'tonkhoInput.min'        => 'Số lượng tồn kho phải lớn hơn hoặc bằng 0!',
+        
+            'select2DM.required'     => 'Vui lòng chọn danh mục sản phẩm!',
+            'select2DM.not_in'       => 'Vui lòng chọn danh mục sản phẩm!',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        
+
         try {
             DB::beginTransaction();
             $maxId = DB::table('sanpham')->max('sp_id');
@@ -233,6 +272,61 @@ class AdminController extends Controller
         return response()->json([
             'status' => 'error',
             'message' => 'Có lỗi hệ thống, vui lòng thử lại!'
+        ], 500);
+    }
+}
+
+//Thêm danh mục 
+public function themDM(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'dmInput'   => 'required'
+    ], [
+        // Các lỗi validate
+        'dmInput.required'    => 'Tên tài khoản không được để trống!',
+        
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    try {
+        DB::beginTransaction();
+
+        // Tự động tạo tl_id mới (A01, Q01, ...)
+        
+        $maxId = DB::table('theloai')->max(DB::raw('CAST(SUBSTRING(tl_id, 2) AS UNSIGNED)'));
+        $newId = 'U' . str_pad($maxId + 1, 4, '0', STR_PAD_LEFT);
+
+        $data = [
+            'tl_id' => $newId,
+            'ten'   => $request->input('dmInput'),
+        ];
+
+        $inserted = DB::table('theloai')->insert($data);
+
+        if ($inserted) {
+            DB::commit();
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Thêm danh mục thành công!'
+            ]);
+        } else {
+            DB::rollBack();
+            return response()->json([
+                'status'  => 'fail',
+                'message' => 'Thêm danh mục thất bại!'
+            ]);
+        }
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Có lỗi hệ thống: ' . $e->getMessage()
         ], 500);
     }
 }

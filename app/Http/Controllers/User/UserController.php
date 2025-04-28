@@ -297,12 +297,14 @@ class UserController extends Controller
         'user' => [
             'id' => $user->id,
             'hoten' => $user->hoten,
-            'email' => $user->email
+            'email' => $user->email,
+            'quyen_id'=>$user->quyen_id
         ]
     ]);
 
     return response()->json([
-        'status' => 'success'
+        'status' => 'success',
+        'role'=>$user->quyen_id
     ]);
 }
 
