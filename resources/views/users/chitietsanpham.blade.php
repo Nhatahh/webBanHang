@@ -122,8 +122,8 @@
             >Size L</label
           >
         </div>
-        <div class="input-group quantity-container w-25 mt-3 mb-3">
-          <button class="btn btn-outline-secondary btn-minus" type="button">
+        <div class="input-group quantity-container CT-quantity-container w-25 mt-3 mb-3">
+          <button class="btn btn-outline-secondary CT-minus" type="button">
             -
           </button>
           <input
@@ -132,7 +132,7 @@
             name="soluong"
             value=""
           />
-          <button class="btn btn-outline-secondary btn-plus" type="button">
+          <button class="btn btn-outline-secondary CT-plus" type="button">
             +
           </button>
         </div>

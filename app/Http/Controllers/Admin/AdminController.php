@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
+
 
 class AdminController extends Controller
 {
@@ -46,6 +46,9 @@ class AdminController extends Controller
     public function banhang() {
         return view('admin.banhang');
     }
+    public function donhang() {
+        return view('admin.donhang');
+    }
     public function danhmuc() {
         return view('admin.danhmuc');
     }
@@ -77,6 +80,60 @@ class AdminController extends Controller
 
         return response()->json(['data' => $data]);
     }
+    //Thêm sản phẩm
+    public function addSP(Request $request) {
+        try {
+            DB::beginTransaction();
+            $maxId = DB::table('sanpham')->max('sp_id');
+            $newId = $maxId + 1;
+            $hinhanhPath = null;
+            $hinhanhName = $request->input('imgIP');
+
+            if (!empty($hinhanhName)) {
+                $hinhanhPath =$hinhanhName;
+            }
+            $data = [
+                'sp_id' => $newId,
+                'tensp' => $request->input('sanphamInput'),
+                'hinhanh' => $hinhanhPath, 
+                'mota' => $request->input('motaInput'),
+                'gia' => $request->input('giaInput'),
+                'tl_id' => $request->input('select2DM'),
+                'tonkho' => $request->input('tonkhoInput'),
+            ];
+            $inserted = DB::table('sanpham')->insert($data);
+            if ($inserted == 1) {
+                DB::commit();
+                return 1;
+            } else {
+                DB::rollBack();
+                return 0;
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return -1;
+        }
+    }
+    public function removeSP($id)
+{
+    try {
+        DB::beginTransaction();
+        $deleted = DB::table('sanpham')
+                    ->where('sp_id', $id)
+                    ->delete();
+        if ($deleted == 1) {
+            DB::commit();
+            return 1;
+        } else {
+            DB::rollBack();
+            return 0;
+        }
+    } catch (Exception $e) {
+        DB::rollBack();
+        return -1;
+    }
+}
+
     public function taikhoan() {
         return view('admin.taikhoan');
     }
@@ -196,4 +253,73 @@ class AdminController extends Controller
     function select2DM(){
         return $this-> load_seclectbox('theloai', 'tl_id', 'ten', 0, '--- Chọn danh mục ---');
     }
+
+    public function getDanhSach()
+    {
+        // Lấy danh sách đơn hàng
+        $data = DB::table('donhang as dh')
+            ->leftJoin('taikhoan as tk', 'dh.user_id', '=', 'tk.user_id')
+            ->leftJoin('trangthai as tt', 'dh.tt_id', '=', 'tt.tt_id')
+            ->leftJoin('ptthanhtoan as pt', 'dh.pttt_id', '=', 'pt.pttt_id')
+            ->select(
+                'dh.dh_id as dh_id',
+                'tk.tentk as tentk',
+                'tt.ten as tt',
+                'dh.created_at as created_at',
+                'dh.tongtien as tongtien',
+                'pt.ten as phuongthucthanhtoan'
+            )
+            ->orderBy('dh.dh_id', 'desc')
+            ->get();
+
+        // Trả về dữ liệu dưới dạng JSON
+        return response()->json(['data' => $data]);
+    }
+
+    // Phương thức lấy chi tiết đơn hàng theo dh_id
+    public function getChiTietDonHang($dh_id)
+    {
+        $data = DB::table('chitietdonhang as ctdh')
+        ->leftJoin('sanpham as sp', 'ctdh.sp_id', '=', 'sp.sp_id')
+        ->leftJoin('size', 'ctdh.size_id', '=', 'size.size_id')
+        ->select(
+            'sp.tensp as tensp',
+            'size.ten as size',
+            'ctdh.soluong as soluong',
+            'ctdh.dongia as dongia',
+            'ctdh.thanhtien as thanhtien'
+        )
+        ->where('ctdh.dh_id', $dh_id)
+        ->get();
+
+    // Trả dữ liệu dưới dạng JSON
+    return response()->json(['data' => $data]);
+    }
+
+    public function updateTrangthai(Request $request)
+    {
+        $dh_id = $request->dh_id;
+        $status = $request->status;
+
+        try {
+            DB::table('donhang')
+                ->where('dh_id', $dh_id)
+                ->update(['tt_id' => $status]);
+
+            return response()->json(['status' => 'success', 'message' => 'Cập nhật trạng thái thành công!']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Có lỗi xảy ra!!!']);
+        }
+    }
+
+    // public function getAllTrangThai()
+    // {
+    //     $trangthais = Trangthai::all();
+
+    //     return response()->json([
+    //         'data' => $trangthais
+    //     ]);
+    // }
+
+
 }

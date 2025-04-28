@@ -15,6 +15,37 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    function load_seclectbox($table,$feild_id,$feild_text,$seclected_id,$text_0){
+        $data0 = new Collection([
+            'id' => 0,
+            'text' => $text_0,
+            'selected' =>'selected'
+        ]);
+        $data = DB::table($table)->select($feild_id." as id",$feild_text." as text")->get();
+        $i = 0;
+        foreach ($data as $value) {
+            if($value->id == $seclected_id){
+                $value->selected =  'selected';
+                $i++;
+            }else{
+                $value->selected =  '';
+            }
+        }
+        if( $i == 1){
+            $data[] = new Collection([
+                'id' => 0,
+                'text' => $text_0,
+                'selected' =>''
+            ]);
+        }else{
+            $data[] = new Collection([
+                'id' => 0,
+                'text' => $text_0,
+                'selected' =>'selected'
+            ]);
+        }
+        return $data;
+    }
     public function home() {
         $sanphams = DB::table('sanpham')->get();
         return view('users.index', compact('sanphams'));
@@ -119,7 +150,7 @@ class UserController extends Controller
         return view('users.dangnhap');
     }
     public function giohang() {
-        $user_id = 'U01'; 
+        $user_id = '1'; 
         $items = DB::table('giohang as gh')
             ->leftJoin('taikhoan as tk', 'tk.user_id', '=', 'gh.user_id')
             ->leftJoin('sanpham as sp', 'sp.sp_id', '=', 'gh.sp_id')
@@ -143,7 +174,7 @@ class UserController extends Controller
         $phi_ship = 35000;
         $tong_tien = $tam_tinh + $phi_ship;
 
-        return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien'));
+        return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien', 'user_id'));
     }
     public function membership() {
         return view('users.membership');
@@ -282,7 +313,7 @@ class UserController extends Controller
     // // Cap nhat so luong san pham
     public function capnhatSoluong(Request $request)
     {
-        $user_id = 'U01'; 
+        $user_id = '1'; 
         $size_id = $request->size;
         $sp_id = $request->sp_id;
         $quantity = $request->quantity;
@@ -302,7 +333,7 @@ class UserController extends Controller
     // Xoa san pham 
     public function xoaGioHang(Request $request)
     {
-        $user_id = 'U01';
+        $user_id = '1';
         DB::table('giohang')
             ->where('user_id', $user_id)
             ->where('sp_id', $request->sp_id)
@@ -311,4 +342,58 @@ class UserController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function membership() {
+        return view('users.membership');
+    }
+    public function ptthanhtoan() {
+        return view('users.phuongthucthanhtoan');
+    }
+    public function chinhsach() {
+        return view('users.chinhsach');
+    }
+
+    public function xulydangky(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|regex:/^0[0-9]{9}$/',
+            'password' => 'required|min:3|confirmed',
+        ], [
+            'fullname.required'=> 'Vui lòng nhập họ tên',
+            'email.required'=> 'Vui lòng nhập email',
+            'email.email' => 'Email không đúng định dạng',
+            'phone.required' => 'Bạn chưa nhập số điện thoại',
+            'phone.regex' => 'Số điện thoại không đúng định dạng',
+            'password.required'=> 'Vui lòng nhập password',
+            'password.min'=> 'Mật khẩu tối thiểu 3 ký tự',            
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        return redirect()->route('user.dangnhap')->with('success', 'Đăng ký thành công!');
+    }
+
+
+    public function xulydangnhap(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ], [
+            'email.required'=> 'Vui lòng nhập email',
+            'email.email' => 'Email không đúng định dạng',
+            'password.required'=> 'Vui lòng nhập password',   
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        return redirect()->route('user.home')->with('success', 'Đăng ký thành công!');
+    }
+
 }

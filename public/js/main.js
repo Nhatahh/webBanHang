@@ -1,77 +1,41 @@
 $(document).ready(function () {
-  $.ajaxSetup({
-      headers: {
-          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      },
-  });
-});
-// //thêm giỏ hàng 
-$('#formGioHang').submit(function(e) {
-  e.preventDefault();
-  var sizeSelected = $('input[name="size"]:checked').val();
-  if (!sizeSelected) {
-      toastr.warning('Vui lòng chọn size trước khi thêm vào giỏ hàng.');
-      return false; // Dừng lại, không gửi ajax
-  }
-
-  var formData = $(this).serialize();
-  
-  $.ajax({
-      url: $(this).attr('action'),
-      type: 'POST',
-      data: formData,
-      success: function(response) {
-          console.log(response);
-          if (response.status === 'success') {
-              toastr.success(response.message); 
-              setTimeout(function() {
-                  window.location.href = "/webBanHang/public/user/giohang";
-              }, 1500); 
-          } else if (response.status === 'error') {
-            toastr.warning(response.message); 
-          }
-          else {
-              toastr.error('Có lỗi xảy ra khi thêm vào giỏ hàng.'); 
-          }
-      },
-      error: function(xhr) {
-          toastr.error('Có lỗi xảy ra. Vui lòng thử lại.');
-      }
-  });
-
-  return false;
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+    load_bandau();
 });
 
 
-$('.quantity-input').on('input', function() {
-  this.value = this.value.replace(/[^0-9]/g, ''); // Chỉ cho nhập số
-  if (this.value === '0' || this.value === '') {
-      this.value = 1; 
-  }
-});
-// Tăng giảm số lượng
-$('.btn-plus').click(function() {
-  let input = $(this).siblings('.quantity-input');
-  let value = parseInt(input.val()) || 0;
-  input.val(value + 1);
-});
-$('.btn-minus').click(function() {
-  let input = $(this).siblings('.quantity-input');
-  let value = parseInt(input.val()) || 0;
-  if (value > 1) {
-    input.val(value - 1);
-  }
-});
+
+function load_bandau() {
+    select2PTTT();
+}
+
+function select2PTTT() {
+    $.ajax({
+        url: "/select2PTTT",
+        type: "get",
+        success: function (res) {
+            $("#select2PTTT").select2({
+                data: res,
+            });
+        },
+    });
+}
+
+
 
 // Cap nhat so luong san pham
-$(document).on("click", ".btn-minusss, .btn-plusss", function () {
-  let container = $(this).closest(".quantity-container");
-  let input = container.find(".quantity-inputtt");
+$(document).on("click", ".GH-minus, .GH-plus", function () {
+    let container = $(this).closest(".GH-quantity-container");
+    let input = container.find(".GH-quantity");
 
   let quantity = parseInt(input.val()) || 1;
 
-  if ($(this).hasClass("btn-minusss") && quantity > 1) quantity--;
-  if ($(this).hasClass("btn-plusss")) quantity++;
+    if ($(this).hasClass("GH-minus") && quantity > 1) quantity--;
+    if ($(this).hasClass("GH-plus")) quantity++;
 
   input.val(quantity);
 
@@ -112,11 +76,11 @@ function updateTongtien() {
   let total = 0;
   let phiShip = parseInt($("#phiShip").text().replace(/\D/g, "")) || 0;
 
-  $(".quantity-inputtt").each(function () {
-      let gia = parseInt($(this).data("gia")) || 0;
-      let soluong = parseInt($(this).val()) || 0;
-      total += gia * soluong;
-  });
+    $(".GH-quantity").each(function () {
+        let gia = parseInt($(this).data("gia")) || 0;
+        let soluong = parseInt($(this).val()) || 0;
+        total += gia * soluong;
+    });
 
   $("#tamTinh").text(total.toLocaleString("vi-VN"));
   $("#tongTien").text((total + phiShip).toLocaleString("vi-VN"));
@@ -218,7 +182,6 @@ function displaySearchResults(results) {
       resultsContainer.style.display = "block";
   }
 }
-
 //Đăng ký
 $(document).ready(function() {
     $("#dangkyForm").submit(function(e) {
@@ -291,4 +254,3 @@ $('#loginForm').on('submit', function(e) {
         }
     });
 });
-

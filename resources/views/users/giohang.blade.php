@@ -31,11 +31,11 @@
                   >
                   <p><small>Size: {{ $item->size }}</small></p>
                   <p>{{ number_format($item->gia, 0, ',', ',') }} VND</p>
-                  <div class="input-group quantity-container float-start">
-                      <button class="btn btn-outline-secondary btn-minusss" type="button">-</button>
-                      <input type="number" class="form-control text-center quantity-inputtt" value="{{ $item->soluong }}"
+                  <div class="input-group GH-quantity-container quantity-container float-start">
+                      <button class="btn btn-outline-secondary GH-minus" type="button">-</button>
+                      <input type="number" class="form-control text-center GH-quantity" value="{{ $item->soluong }}"
                           data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" data-gia="{{ $item->gia }}" readonly/>
-                      <button class="btn btn-outline-secondary btn-plusss" type="button">+</button>
+                      <button class="btn btn-outline-secondary GH-plus" type="button">+</button>
                   </div>
                   <button id="btn-removeSingle" data-spid="{{ $item->sp_id }}" data-size="{{ $item->size_id }}" class="btn removeSingle float-end" style="padding: 0">
                       <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
@@ -58,16 +58,19 @@
                   <p>Phí vận chuyển</p>
                   <b>Tổng cộng</b>
                 </div>
-                <div class="col-6">
+                <div class="col-6 mb-4">
                   <p><span id="tamTinh">{{ number_format($tam_tinh, 0, ',', ',') }}</span> VNĐ</p>
                   <p>0 VNĐ</p>
                   <p><span id="phiShip">{{ number_format($phi_ship, 0, ',', ',') }}</span> VNĐ</p>
                   <b><span id="tongTien">{{ number_format($tong_tien, 0, ',', ',') }}</span> VNĐ</b>
                 </div>
+                <select class="form-control" id="select2PTTT" onchange="" style="width: 100%;"></select>
               </div>
             </div>
-            <div class="card-footer p-3" style="border: none; background-color: #f8f8f8">
-              <a href="#" class="thanhtoan btn btn-primary w-100 rounded-0">Thanh toán</a>
+            <div class="card-footer" style="border: none; background-color: #f8f8f8">
+              <button id="btn-thanhtoan" data-user_id="{{$user_id}}" class="btn thanhtoan w-100 btn-primary">
+                Thanh toán
+              </button>
             </div>
           </div>
         </div>

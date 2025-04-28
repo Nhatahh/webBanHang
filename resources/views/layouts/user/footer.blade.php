@@ -37,10 +37,13 @@
         Copyright © 2025 NHATAHH by Bùi Hữu Nhật
     </div>
     <script>
+        const giohangURL = "{{ route('user.giohang') }}";
         const updateURL = "{{ route('user.giohang.capnhat') }}";
         const deleteURL = "{{ route('user.giohang.xoa') }}";
+        const thanhtoanURL = "{{ route('user.giohang.thanhtoan') }}";
         const searchURL = "{{ route('user.search') }}";
         const imgURL = "{{ asset('images') }}"; 
         const linksearchURL = "{{ url('user/chitiet') }}/"; 
+        const csrfToken = "{{ csrf_token() }}"; 
     </script>
 </footer>
