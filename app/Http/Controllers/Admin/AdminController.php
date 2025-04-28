@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use App\Models\Sanpham;
+use App\Models\Trangthai;
 
 
 
@@ -209,6 +210,30 @@ class AdminController extends Controller
     return response()->json(['data' => $data]);
     }
 
+    public function updateTrangthai(Request $request)
+    {
+        $dh_id = $request->dh_id;
+        $status = $request->status;
+
+        try {
+            DB::table('donhang')
+                ->where('dh_id', $dh_id)
+                ->update(['tt_id' => $status]);
+
+            return response()->json(['status' => 'success', 'message' => 'Cập nhật trạng thái thành công!']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Có lỗi xảy ra!!!']);
+        }
+    }
+
+    // public function getAllTrangThai()
+    // {
+    //     $trangthais = Trangthai::all();
+
+    //     return response()->json([
+    //         'data' => $trangthais
+    //     ]);
+    // }
 
 
 }

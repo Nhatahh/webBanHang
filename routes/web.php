@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\User\SearchController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\TTController;
+use App\Http\Controllers\Admin\DonhangController;
+use App\Http\Controllers\Admin\TrangthaiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +34,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/chitiet/{dh_id}', [AdminController::class, 'getChiTietDonHang'])->name('admin.donhang.chitiet');
 
 
-
     Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
     Route::get('/loadDM', [AdminController::class, 'loadDM'])->name('admin.loadDM');
 
@@ -50,6 +52,15 @@ Route::get('/select2TT', [AdminController::class, 'select2TT'])->name('select2TT
 Route::get('/select2DM', [AdminController::class, 'select2DM'])->name('select2DM');  
 Route::post('/addSP', [AdminController::class, 'addSP'])->name('addSP');  
 Route::delete('/removeSP/{id}', [AdminController::class, 'removeSP'])->name('removeSP');  
+Route::post('/update-donhang-status', [DonhangController::class, 'updateTrangThai'])->name('api.donhang.updateTrangThai');
+
+Route::prefix('api')->group(function () {
+    Route::get('/donhang', [DonhangController::class, 'index'])->name('api.donhang.index');
+    Route::get('/trangthai', [TrangthaiController::class, 'index'])->name('api.trangthai.index');
+});
+
+
+
 
 Route::prefix('user')->group(function () {
     Route::get('/home', [UserController::class, 'home'])->name('user.home');

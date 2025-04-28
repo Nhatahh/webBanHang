@@ -53,9 +53,23 @@ function formatCurrency(amount) {
 }
 
 //Bảng danh sách đơn hàng
-$(document).ready(function () {
-    let DonhangURL = $("#donhang-table").data("url");
-
+const DonhangURL = $("#donhang-table").data("url");
+const TrangthaiURL = $("#donhang-table").data("trangthai-url");
+let trangThaiList = [];
+// Load trạng thái 1 lần rồi khởi tạo bảng
+$.ajax({
+    url: TrangthaiURL,
+    method: "GET",
+    success: function (response) {
+        trangThaiList = response.data;
+        window.trangThaiList = trangThaiList;
+        initDataTable();
+    },
+    error: function () {
+        Swal.fire("Lỗi", "Không thể tải danh sách trạng thái", "error");
+    },
+});
+function initDataTable() {
     var tableTK = $("#dsDonhang").DataTable({
         ajax: {
             type: "GET",
@@ -78,11 +92,26 @@ $(document).ready(function () {
             },
             {
                 title: "tt",
-                data: "tt",
+                data: "tt_id",
+                render: function (data, type, row) {
+                    let trangThaiOptions = "";
+
+                    window.trangThaiList.forEach(function (item) {
+                        trangThaiOptions += `<option value="${item.id}" ${
+                            item.id == data ? "selected" : ""
+                        }>${item.ten}</option>`;
+                    });
+
+                    return `
+                    <select class="form-control select2TT" data-dh_id="${row.dh_id}">
+                        ${trangThaiOptions}
+                    </select>
+                    `;
+                },
             },
             {
                 title: "phuongthucthanhtoan",
-                data: "phuongthucthanhtoan",
+                data: "ptthanhtoan_ten",
             },
             {
                 title: "created_at",
@@ -160,6 +189,38 @@ $(document).ready(function () {
             var length = pageInfo.length; // Số hàng mỗi trang
             var stt = page * length + index + 1; // Tính STT
             $("td:eq(0)", row).html(stt); // Gán STT vào cột đầu tiên
+        },
+    });
+}
+// Khởi tạo select2 sau khi table vẽ xong
+// tableTK.on("draw", function () {
+//     $(".select2TT").select2({
+//         width: "100%",
+//         placeholder: "Chọn trạng thái",
+//         allowClear: true,
+//     });
+// });
+// Lắng nghe sự kiện thay đổi trạng thái
+$("#dsDonhang").on("change", ".select2TT", function () {
+    let dh_id = $(this).data("dh_id");
+    let newStatus = $(this).val();
+
+    $.ajax({
+        url: "/update-donhang-status", // URL để cập nhật trạng thái
+        method: "post",
+        data: {
+            dh_id: dh_id,
+            tt_id: newStatus,
+        },
+        success: function (response) {
+            if (response.status === "success") {
+                Swal.fire("Cập nhật thành công", response.message, "success");
+            } else {
+                Swal.fire("Lỗi", "Không thể cập nhật trạng thái", "error");
+            }
+        },
+        error: function () {
+            Swal.fire("Lỗi", "Không thể kết nối tới server", "error");
         },
     });
 });
