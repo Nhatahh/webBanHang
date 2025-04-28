@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -91,6 +91,97 @@ class AdminController extends Controller
 
         return response()->json(['data' => $data]);
     }
+    //Thêm tài khoản
+    public function themTaiKhoan(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'tenTKInput'   => 'required|string|min:3|max:50|regex:/^[a-zA-Z0-9_]+$/|unique:taikhoan,tenTK',
+        'matKhauInput' => 'required|string|min:6',
+        'select2Quyen' => 'required|not_in:0',
+        'hoTenInput'   => 'required|string|max:100|regex:/^[\p{L}\s]+$/u',
+        'sdtInput'     => 'required|digits_between:10,11|regex:/^0\d{9,10}$/',
+        'diaChiInput'  => 'required|string|max:255',
+        'emailInput'   => 'required|email',
+        'select2TT'    => 'required|not_in:0',
+    ], [
+        // Các lỗi validate
+        'tenTKInput.required'    => 'Tên tài khoản không được để trống!',
+        'matKhauInput.required'  => 'Mật khẩu không được để trống!',
+        'select2Quyen.required'  => 'Vui lòng chọn loại tài khoản!',
+        'select2Quyen.not_in'    => 'Vui lòng chọn loại tài khoản!',
+        'hoTenInput.required'    => 'Họ tên không được để trống!',
+        'sdtInput.required'      => 'Số điện thoại không được để trống!',
+        'diaChiInput.required'   => 'Địa chỉ không được để trống!',
+        'emailInput.required'    => 'Email không được để trống!',
+        'select2TT.required'     => 'Vui lòng chọn trạng thái!',
+        'select2TT.not_in'       => 'Vui lòng chọn trạng thái!',
+
+        // Các lỗi định dạng
+        'tenTKInput.regex'        => 'Tên tài khoản chỉ được chứa chữ cái, số và dấu gạch dưới!',
+        'tenTKInput.min'          => 'Tên tài khoản phải có ít nhất 3 ký tự!',
+        'tenTKInput.max'          => 'Tên tài khoản tối đa 50 ký tự!',
+        'tenTKInput.unique'       => 'Tên tài khoản đã tồn tại!',
+        'matKhauInput.min'         => 'Mật khẩu phải từ 6 ký tự trở lên!',
+        'hoTenInput.max'           => 'Họ tên tối đa 100 ký tự!',
+        'hoTenInput.regex'         => 'Họ tên chỉ chứa chữ và khoảng trắng!',
+        'sdtInput.digits_between'  => 'Số điện thoại phải từ 10 đến 11 số!',
+        'sdtInput.regex'           => 'Số điện thoại phải bắt đầu bằng số 0!',
+        'emailInput.email'         => 'Email không đúng định dạng!',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    try {
+        DB::beginTransaction();
+
+        // $maxId = DB::table('taikhoan')->max('user_id');
+        // $newId = $maxId ? 'U' . str_pad(((int) substr($maxId, 1)) + 1, 4, '0', STR_PAD_LEFT) : 'U0001';
+        $maxId = DB::table('taikhoan')->max(DB::raw('CAST(SUBSTRING(user_id, 2) AS UNSIGNED)'));
+        $newId = 'U' . str_pad($maxId + 1, 4, '0', STR_PAD_LEFT);
+
+        $data = [
+            'user_id'  => $newId,
+            'tenTK'    => $request->input('tenTKInput'),
+            'matkhau'  => Hash::make($request->input('matKhauInput')),
+            'quyen_id' => $request->input('select2Quyen'),
+            'hoten'    => $request->input('hoTenInput'),
+            'sdt'      => $request->input('sdtInput'),
+            'diachi'   => $request->input('diaChiInput'),
+            'email'    => $request->input('emailInput'),
+            'tt_id'    => $request->input('select2TT'),
+        ];
+
+        $inserted = DB::table('taikhoan')->insert($data);
+
+        if ($inserted) {
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thêm tài khoản thành công!'
+            ]);
+        } else {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Thêm tài khoản thất bại!'
+            ]);
+        }
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Có lỗi hệ thống, vui lòng thử lại!'
+        ], 500);
+    }
+}
+
+
+
     public function thongke() {
         return view('admin.thongke');
     }

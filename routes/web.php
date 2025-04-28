@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
     Route::get('/loadTK', [AdminController::class, 'loadTK'])->name('admin.loadTK');
+    Route::post('/themTaiKhoan',[AdminController::class, 'themTaiKhoan'])->name('admin.themTaiKhoan');
 
     Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
 
@@ -52,6 +53,7 @@ Route::prefix('user')->group(function () {
 
     Route::get('/chitiet/{id}', [UserController::class, 'chitiet'])->name('user.chitiet');
     Route::post('/themgiohang', [UserController::class, 'themgiohang'])->name('user.themgiohang');
+
     Route::get('/dangky', [UserController::class, 'dangky'])->name('user.dangky');
     Route::post('/xuly-dangky', [UserController::class, 'xulydangky'])->name('user.xulydangky');
 
@@ -64,6 +66,8 @@ Route::prefix('user')->group(function () {
 
 
     Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
+
+   
 
     Route::get('/ptthanhtoan', [UserController::class, 'ptthanhtoan'])->name('user.ptthanhtoan');
 

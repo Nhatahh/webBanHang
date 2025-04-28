@@ -9,6 +9,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Psy\Readline\Hoa\Console;
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
 
 
 class UserController extends Controller
@@ -76,8 +78,8 @@ class UserController extends Controller
 
             $tongSoLuong = ($cartItem->soluong ?? 0) + $validated['soluong'];
 
-            if ($tongSoLuong > $sanpham->soluong) {
-                return response()->json(['status' => 'error', 'message' => 'Số lượng yêu cầu vượt quá tồn kho!']);
+            if ($tongSoLuong > $sanpham->tonkho) {
+                return response()->json(['status' => 'error', 'message' => 'Hết hàng!']);
             }
 
             if ($cartItem) {
@@ -117,24 +119,31 @@ class UserController extends Controller
         return view('users.dangnhap');
     }
     public function giohang() {
-        // $user_id = Auth::user()->user_id;
-        $user_id = 'U01';
+        $user_id = 'U01'; 
         $items = DB::table('giohang as gh')
             ->leftJoin('taikhoan as tk', 'tk.user_id', '=', 'gh.user_id')
             ->leftJoin('sanpham as sp', 'sp.sp_id', '=', 'gh.sp_id')
             ->leftJoin('size', 'size.size_id', '=', 'gh.size_id')
             ->where('gh.user_id', $user_id)
             ->select(
-                'sp.sp_id as sp_id',
                 'sp.tensp',
                 'sp.hinhanh as hinhanh',
                 'sp.gia as gia',
-                'sp.gia as sp_id',
+                'sp.sp_id as sp_id',
                 'size.ten as size', 
+                'size.size_id as size_id', 
                 'gh.soluong as soluong'
             )
             ->get();
-        return view('users.giohang', compact('items'));
+
+        $tam_tinh = 0;
+        foreach ($items as $item) {
+            $tam_tinh += $item->gia * $item->soluong;
+        }
+        $phi_ship = 35000;
+        $tong_tien = $tam_tinh + $phi_ship;
+
+        return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien'));
     }
     public function membership() {
         return view('users.membership');
@@ -149,13 +158,21 @@ class UserController extends Controller
     public function xulydangky(Request $request) {
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|string|max:255',
+            'tenTK'   => 'required|string|min:3|max:50|regex:/^[a-zA-Z0-9_]+$/|unique:taikhoan,tenTK',
             'email' => 'required|email',
+            'diachi'  => 'required|string|max:255',
             'phone' => 'required|regex:/^0[0-9]{9}$/',
             'password' => 'required|min:3|confirmed',
         ], [
             'fullname.required'=> 'Vui lòng nhập họ tên',
+            'tenTK.required'    => 'Tên tài khoản không được để trống!',
+            'tenTK.regex'        => 'Tên tài khoản chỉ được chứa chữ cái, số và dấu gạch dưới!',
+            'tenTK.min'          => 'Tên tài khoản phải có ít nhất 3 ký tự!',
+            'tenTK.max'          => 'Tên tài khoản tối đa 50 ký tự!',
+            'tenTK.unique'       => 'Tên tài khoản đã tồn tại!',
             'email.required'=> 'Vui lòng nhập email',
             'email.email' => 'Email không đúng định dạng',
+            'diachi.required'   => 'Địa chỉ không được để trống!',
             'phone.required' => 'Bạn chưa nhập số điện thoại',
             'phone.regex' => 'Số điện thoại không đúng định dạng',
             'password.required'=> 'Vui lòng nhập password',
@@ -164,29 +181,134 @@ class UserController extends Controller
         ]);
     
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
-        return redirect()->route('user.dangnhap')->with('success', 'Đăng ký thành công!');
-    }
-
-
-    public function xulydangnhap(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
-        ], [
-            'email.required'=> 'Vui lòng nhập email',
-            'email.email' => 'Email không đúng định dạng',
-            'password.required'=> 'Vui lòng nhập password',   
-            'password.confirmed' => 'Mật khẩu xác nhận không khớp',
-        ]);
+        try {
+            DB::beginTransaction();
     
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            // $maxId = DB::table('taikhoan')->max('user_id');
+            // $newId = $maxId ? 'U' . str_pad(((int) substr($maxId, 1)) + 1, 4, '0', STR_PAD_LEFT) : 'U0001';
+            $maxId = DB::table('taikhoan')->max(DB::raw('CAST(SUBSTRING(user_id, 2) AS UNSIGNED)'));
+            $newId = 'U' . str_pad($maxId + 1, 4, '0', STR_PAD_LEFT);
+            
+            $data = [
+                'user_id'  => $newId,
+                'tenTK'    => $request->input('tenTK'),
+                'matkhau'  => $request->input('password'),
+                'quyen_id' => 'Q02',
+                'hoten'    => $request->input('fullname'),
+                'sdt'      => $request->input('phone'),
+                'diachi'   => $request->input('diachi'),
+                'email'    => $request->input('email'),
+                'tt_id'    => 'TT03',
+            ];
+    
+            $inserted = DB::table('taikhoan')->insert($data);
+    
+            if ($inserted) {
+                DB::commit();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Đăng ký tài khoản thành công!'
+                ]);
+            } else {
+                DB::rollBack();
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Đăng ký tài khoản thất bại!'
+                ]);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
         }
+    }
+    
 
-        return redirect()->route('user.home')->with('success', 'Đăng ký thành công!');
+
+
+
+    public function xulydangnhap(Request $request) 
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required',
+    ], [
+        'email.required' => 'Vui lòng nhập email',
+        'email.email' => 'Email không đúng định dạng',
+        'password.required' => 'Vui lòng nhập password',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'errors' => $validator->errors()
+        ], 422);
     }
 
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || $request->password !== $user->matkhau) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Email hoặc mật khẩu không đúng!'
+        ], 401);
+    }
+
+    session([
+        'user' => [
+            'id' => $user->id,
+            'hoten' => $user->hoten,
+            'email' => $user->email
+        ]
+    ]);
+
+    return response()->json([
+        'status' => 'success'
+    ]);
+}
+
+    
+
+
+    
+    // // Cap nhat so luong san pham
+    public function capnhatSoluong(Request $request)
+    {
+        $user_id = 'U01'; 
+        $size_id = $request->size;
+        $sp_id = $request->sp_id;
+        $quantity = $request->quantity;
+
+        $updated = DB::table('giohang')
+            ->where('user_id', $user_id)
+            ->where('sp_id', $sp_id)
+            ->where('size_id', $size_id)
+            ->update(['soluong' => $quantity]);
+
+        if ($updated) {
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+    // Xoa san pham 
+    public function xoaGioHang(Request $request)
+    {
+        $user_id = 'U01';
+        DB::table('giohang')
+            ->where('user_id', $user_id)
+            ->where('sp_id', $request->sp_id)
+            ->where('size_id', $request->size_id)
+            ->delete();
+
+        return response()->json(['success' => true]);
+    }
 }

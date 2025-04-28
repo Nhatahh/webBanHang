@@ -155,4 +155,3 @@
 </div>
 
 @endsection
-@push('scripts')

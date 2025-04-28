@@ -12,33 +12,36 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // ✅ Ghi rõ bảng
+    protected $table = 'taikhoan';
+
+    // ✅ Ghi rõ khóa chính
+    protected $primaryKey = 'user_id';
+
+    // ✅ Nếu khóa chính KHÔNG phải dạng số tự tăng
+    public $incrementing = false;
+
+    // ✅ Kiểu khóa chính
+    protected $keyType = 'string';
+
+    // ✅ Bỏ tự động cập nhật timestamps
+    public $timestamps = false;
+
+    // ✅ Các cột cho phép gán
     protected $fillable = [
-        'name',
+        'user_id',
+        'tenTK',
+        'matkhau',
+        'sdt',
         'email',
-        'password',
+        'diachi',
+        'hoten',
+        'quyen_id',
+        'tt_id',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    // ✅ Các cột cần ẩn khi trả JSON (nếu có)
     protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'matkhau',
     ];
 }

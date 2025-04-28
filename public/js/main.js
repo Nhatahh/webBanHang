@@ -5,7 +5,7 @@ $(document).ready(function () {
       },
   });
 });
-
+// //thêm giỏ hàng 
 $('#formGioHang').submit(function(e) {
   e.preventDefault();
   var sizeSelected = $('input[name="size"]:checked').val();
@@ -42,6 +42,7 @@ $('#formGioHang').submit(function(e) {
   return false;
 });
 
+
 $('.quantity-input').on('input', function() {
   this.value = this.value.replace(/[^0-9]/g, ''); // Chỉ cho nhập số
   if (this.value === '0' || this.value === '') {
@@ -54,7 +55,6 @@ $('.btn-plus').click(function() {
   let value = parseInt(input.val()) || 0;
   input.val(value + 1);
 });
-
 $('.btn-minus').click(function() {
   let input = $(this).siblings('.quantity-input');
   let value = parseInt(input.val()) || 0;
@@ -64,14 +64,14 @@ $('.btn-minus').click(function() {
 });
 
 // Cap nhat so luong san pham
-$(document).on("click", ".btn-minus, .btn-plus", function () {
+$(document).on("click", ".btn-minusss, .btn-plusss", function () {
   let container = $(this).closest(".quantity-container");
-  let input = container.find(".quantity-input");
+  let input = container.find(".quantity-inputtt");
 
   let quantity = parseInt(input.val()) || 1;
 
-  if ($(this).hasClass("btn-minus") && quantity > 1) quantity--;
-  if ($(this).hasClass("btn-plus")) quantity++;
+  if ($(this).hasClass("btn-minusss") && quantity > 1) quantity--;
+  if ($(this).hasClass("btn-plusss")) quantity++;
 
   input.val(quantity);
 
@@ -112,7 +112,7 @@ function updateTongtien() {
   let total = 0;
   let phiShip = parseInt($("#phiShip").text().replace(/\D/g, "")) || 0;
 
-  $(".quantity-input").each(function () {
+  $(".quantity-inputtt").each(function () {
       let gia = parseInt($(this).data("gia")) || 0;
       let soluong = parseInt($(this).val()) || 0;
       total += gia * soluong;
@@ -121,7 +121,6 @@ function updateTongtien() {
   $("#tamTinh").text(total.toLocaleString("vi-VN"));
   $("#tongTien").text((total + phiShip).toLocaleString("vi-VN"));
 }
-
 // Xoa san pham
 $(document).on("click", ".removeSingle", function () {
   let sp_id = $(this).data("spid");
@@ -219,3 +218,77 @@ function displaySearchResults(results) {
       resultsContainer.style.display = "block";
   }
 }
+
+//Đăng ký
+$(document).ready(function() {
+    $("#dangkyForm").submit(function(e) {
+        e.preventDefault();
+        $(".err_del").text("");
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status === "success") {
+                    toastr.success("Đăng ký tài khoản thành công!");
+                } else if (response.status === "fail") {
+                    toastr.error("Đăng ký tài khoản thất bại!");
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    // Bắt lỗi validate
+                    var errors = xhr.responseJSON.errors;
+                    const keys = Object.keys(errors);
+                    for (let i = 0; i < keys.length; i++) {
+                        const field = keys[i];
+                        const messages = errors[field];
+                        $("#err_" + field).text(messages[0]);
+                    }
+                } else {
+                    toastr.error("Có lỗi trong quá trình xử lý!");
+                }
+            }
+        });
+    });
+});
+
+//Đăng nhập 
+$('#loginForm').on('submit', function(e) {
+    e.preventDefault();
+    $(".err_del").text(""); // Xóa lỗi cũ
+    $("#errorMessage").text("");
+
+    var formData = new FormData(this);
+
+    $.ajax({
+        url: $(this).attr('action'),
+        method: $(this).attr('method'),
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            if(response.status === "success") {
+                window.location.href = '/user/home'; // Luôn chuyển tới user/home
+            } else {
+                $('#errorMessage').text(response.message);
+            }
+        },
+        error: function(xhr) {
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON.errors;
+                $.each(errors, function(field, messages) {
+                    $("#err_" + field).text(messages[0]);
+                });
+            } else {
+                $("#errorMessage").text("Có lỗi trong quá trình xử lý!");
+            }
+        }
+    });
+});
+

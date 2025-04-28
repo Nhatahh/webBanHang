@@ -49,7 +49,7 @@ function select2DM() {
 }
 
 //Bảng danh sách tài khoản
-var table = $("#dsTaikhoan").DataTable({
+var tableTaikhoan = $("#dsTaikhoan").DataTable({
     ajax: {
         type: "get",
         url: loadTK,
@@ -61,36 +61,36 @@ var table = $("#dsTaikhoan").DataTable({
             data: null,
         },
         {
-            title: "id",
+            title: "ID",
             data: "user_id",
             visible: false,
         },
         {
-            title: "tentk",
+            title: "Tên tài khoản",
             data: "tentk",
         },
         {
-            title: "hoten",
+            title: "Họ tên",
             data: "hoten",
         },
         {
-            title: "sdt",
+            title: "SDT",
             data: "sdt",
         },
         {
-            title: "diachi",
+            title: "Địa chỉ ",
             data: "diachi",
         },
         {
-            title: "email",
+            title: "Email",
             data: "email",
         },
         {
-            title: "tenquyen",
+            title: "Phân quyền",
             data: "tenquyen",
         },
         {
-            title: "tentrangthai",
+            title: "Trạng thái",
             data: "tentrangthai",
         },
         {
@@ -179,6 +179,106 @@ var table = $("#dsTaikhoan").DataTable({
     },
 });
 
+// function validateFormTaiKhoan() {
+//     const tenTK = $("#tenTKInput").val().trim();
+//     const matKhau = $("#matKhauInput").val().trim();
+//     const hoTen = $("#hoTenInput").val().trim();
+//     const sdt = $("#sdtInput").val().trim();
+//     const diaChi = $("#diaChiInput").val().trim();
+//     const email = $("#emailInput").val().trim();
+//     const quyen = $("#select2Quyen").val();
+//     const trangThai = $("#select2TT").val();
+
+//     if (!tenTK) {
+//         toastr.warning("Vui lòng nhập tên tài khoản!");
+//         return false;
+//     }
+
+//     if (!matKhau) {
+//         toastr.warning("Vui lòng nhập mật khẩu!");
+//         return false;
+//     }
+
+//     if (!hoTen) {
+//         toastr.warning("Vui lòng nhập họ tên!");
+//         return false;
+//     }
+
+//     if (!sdt) {
+//         toastr.warning("Vui lòng nhập số điện thoại!");
+//         return false;
+//     }
+
+//     if (!email) {
+//         toastr.warning("Vui lòng nhập email!");
+//         return false;
+//     }
+
+//     if (!quyen || quyen === "0") {
+//         toastr.warning("Vui lòng chọn loại tài khoản!");
+//         return false;
+//     }
+
+//     if (!trangThai || trangThai === "0") {
+//         toastr.warning("Vui lòng chọn trạng thái tài khoản!");
+//         return false;
+//     }
+
+//     return true;
+// }
+
+
+
+//Thêm tài khoản
+$(document).ready(function() {
+    $("#formTaiKhoan").submit(function(e) {
+        e.preventDefault();
+        $(".err_del").text("");
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status === "success") {
+                    toastr.success("Thêm tài khoản thành công!");
+                    tableTaikhoan.ajax.reload();
+                } else if (response.status === "fail") {
+                    toastr.error("Thêm tài khoản thất bại!");
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    // Bắt lỗi validate
+                    var errors = xhr.responseJSON.errors;
+                    const keys = Object.keys(errors);
+                    for (let i = 0; i < keys.length; i++) {
+                        const field = keys[i];
+                        const messages = errors[field];
+                        $("#err_" + field).text(messages[0]);
+                    }
+                } else {
+                    toastr.error("Có lỗi trong quá trình xử lý!");
+                }
+            }
+        });
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
 //Bảng danh sách sản phẩm
 var table = $("#dsSanpham").DataTable({
     ajax: {
@@ -197,27 +297,27 @@ var table = $("#dsSanpham").DataTable({
             visible: false,
         },
         {
-            title: "tensp",
+            title: "Tên sản phẩm",
             data: "tensp",
         },
         {
-            title: "mota",
+            title: "Mô tả",
             data: "mota",
         },
         {
-            title: "gia",
+            title: "Giá",
             data: "gia",
         },
         {
-            title: "tentheloai",
+            title: "Loại",
             data: "tentheloai",
         },
         {
-            title: "tonkho",
+            title: "Tồn kho",
             data: "tonkho",
         },
         {
-            title: "hinhanh",
+            title: "Hình ảnh",
             data: null,
             render: function (data, type, row) {
                 return `
@@ -307,7 +407,7 @@ var table = $("#dsSanpham").DataTable({
     },
 });
 
-//Bảng danh sách sản phẩm
+//Bảng danh sách danh mục
 var table = $("#dsDM").DataTable({
     ajax: {
         type: "get",
@@ -325,7 +425,7 @@ var table = $("#dsDM").DataTable({
             visible: false,
         },
         {
-            title: "ten",
+            title: "Tên",
             data: "ten",
         },
         {

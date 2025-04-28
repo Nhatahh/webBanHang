@@ -23,60 +23,79 @@
         </div>
         <hr class="w-50" />
         <div class="col-12 col-md-6 col-lg-4">
-          <form id="dangkyForm" action="{{ route('user.xulydangky') }}" method="POST" novalidate>
+          <form id="dangkyForm" action="{{ route('user.xulydangky') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-2">
               <input
                 class="form-control"
                 type="text"
                 name="fullname"
+                id="fullname"
                 value="{{ old('fullname')}}"
                 placeholder="* Họ và tên"
               />
-              @error('fullname')
-                <p id="error-fullname" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
-              @enderror
+              <span class="err_del" id="err_fullname" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+            </div>
+            <div class="form-group mb-2">
+              <input
+                class="form-control"
+                type="text"
+                name="tenTK"
+                id="tenTK"
+                value="{{ old('fullname')}}"
+                placeholder="* Tên tài khoản"
+              />
+              <span class="err_del" id="err_tenTK" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+            </div>
+            <div class="form-group mb-2">
+              <input
+                class="form-control"
+                type="text"
+                name="diachi"
+                id="diachi"
+                value="{{ old('diachi')}}"
+                placeholder="* Địa chỉ" 
+              />
+              <span class="err_del" id="err_diachi" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
             </div>
             <div class="form-group mb-2">
               <input
                 class="form-control"
                 type="email"
                 name="email"
+                id="email"
                 value ="{{ old('email') }}"
-                placeholder="* Địa Chỉ Email"
+                placeholder="* Email"
               />
-              @error('email')
-                <p id="error-email" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
-              @enderror
+              <span class="err_del" id="err_email" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
             </div>
             <div class="form-group mb-2">
               <input
                 class="form-control"
                 type="text"
                 name="phone"
+                id="phone"
                 value ="{{ old('phone') }}"
                 placeholder="* Số điện thoại"
               />
-              @error('phone')
-                <p id="error-phone" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
-              @enderror
+              <span class="err_del" id="err_phone" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
             </div>
             <div class="form-group mb-2">
               <input
                 class="form-control"
                 type="password"
                 name="password"
+                id="password"
                 placeholder="* Mật Khẩu"
               />
-              @error('password')
-                <p id="error-password" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
-              @enderror
+              <span class="err_del" id="err_password" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
             </div>
             <div class="form-group mb-2">
               <input
                 class="form-control"
                 type="password"
                 name="password_confirmation"
+                id="password_confirmation"
                 placeholder="* Nhập lại mật Khẩu"
               />
               <p id="error-password_confirmation" class="text-danger mb-3 d-flex justify-content-end"></p>
@@ -89,6 +108,7 @@
                 class="form-check-input"
                 type="checkbox"
                 value="1"
+                name="flexCheckDefault"
                 id="flexCheckDefault"
               />
               <small
@@ -103,9 +123,7 @@
                 ở cuối mỗi email. Để biết thêm thông tin, hãy xem Chính sách
                 quyền riêng tư của NHATAHH.
               </small>
-              @error('agree')
-                <p id="error-agree" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
-              @enderror
+              <span class="err_del" id="err_flexCheckDefault" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
             </div>
               <button
                 type="submit"
