@@ -37,6 +37,7 @@
         Copyright © 2025 NHATAHH by Bùi Hữu Nhật
     </div>
     <script>
+        const giohangURL = "{{ route('user.giohang') }}";
         const updateURL = "{{ route('user.giohang.capnhat') }}";
         const deleteURL = "{{ route('user.giohang.xoa') }}";
         const searchURL = "{{ route('user.search') }}";

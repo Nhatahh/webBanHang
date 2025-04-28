@@ -7,24 +7,42 @@
     <div class="col-md-10 main-content">
         <div class="row">
             <!-- Form Column -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-container mb-4">
                     <form>
                         <div class="mb-3">
-                            <label for="productName" class="form-label">Tên tài khoản</label>
-                            <input type="text" class="form-control" id="productName">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tên tài khoản</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="category" class="form-label">Loại tài khoản</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Chọn loại tài khoản</option>
-                                <option value="1">Người dùng</option>
-                                <option value="2">Admin</option>
-                                </select>
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Mật khẩu</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Ghi chú</label>
-                            <input type="text" class="form-control" id="price">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Loại tài khoản</label>
+                            <select class="form-control" id="select2Quyen" onchange="" style="width: 100%;"></select>
+                            <span  class="err_del" id="err_select2Quyen" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Họ tên</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">SĐT</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Địa chỉ</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Email</label>
+                            <input  type="text" class="form-control search" id="tenTKInput" style="height:28px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Trạng thái</label>
+                            <select class="form-control" id="select2TT" onchange="" style="width: 100%;"></select>
+                            <span  class="err_del" id="err_select2TT" style="position: absolute; top: 12px; right: 25px; color:red;font-size:x-small;font-weight:bold"></span>
                         </div>
                         <button type="submit" class="btn btn-danger add-btn">Thêm</button>
                     </form>
@@ -32,72 +50,11 @@
             </div>
 
             <!-- Table Column -->
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="table-container">
                     <h5 class="mb-3">DANH SÁCH TÀI KHOẢN</h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Tên tài khoản</th>
-                                    <th>Phân loại</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Võ Kiều My</td>
-                                    <td>Nhân viên</td>
-                                    <td><span class="con-hang">Đang hoạt động</span></td>
-                                    <td class="btn-con">
-                                        <a href="#" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                            </tbody>
+                        <table class="table table-bordered table-hover table-striped" style="width: 100%" id="dsTaikhoan">
                         </table>
                     </div>
                 </div>
