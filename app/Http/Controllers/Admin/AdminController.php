@@ -119,25 +119,26 @@ class AdminController extends Controller
             return -1;
         }
     }
+    // Xóa sản phẩm
     public function removeSP($id)
-{
-    try {
-        DB::beginTransaction();
-        $deleted = DB::table('sanpham')
-                    ->where('sp_id', $id)
-                    ->delete();
-        if ($deleted == 1) {
-            DB::commit();
-            return 1;
-        } else {
+    {
+        try {
+            DB::beginTransaction();
+            $deleted = DB::table('sanpham')
+                        ->where('sp_id', $id)
+                        ->delete();
+            if ($deleted == 1) {
+                DB::commit();
+                return 1;
+            } else {
+                DB::rollBack();
+                return 0;
+            }
+        } catch (Exception $e) {
             DB::rollBack();
-            return 0;
+            return -1;
         }
-    } catch (Exception $e) {
-        DB::rollBack();
-        return -1;
     }
-}
 
     public function taikhoan() {
         return view('admin.taikhoan');
@@ -225,15 +226,94 @@ class AdminController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Có lỗi xảy ra!!!']);
         }
     }
+    // Thêm danh mục
+    public function addDM(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'dmInput'   => 'required'
+        ], [
+            'dmInput.required'    => 'Tên danh mục không được để trống!',
+        ]);
 
-    // public function getAllTrangThai()
-    // {
-    //     $trangthais = Trangthai::all();
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
-    //     return response()->json([
-    //         'data' => $trangthais
-    //     ]);
-    // }
+        try {
+            DB::beginTransaction();
 
+            $maxId = DB::table('theloai')->max('tl_id');
+            $newId = $maxId + 1;
+
+            $data = [
+                'tl_id' => $newId,
+                'ten'   => $request->input('dmInput'),
+            ];
+
+            $inserted = DB::table('theloai')->insert($data);
+
+            if ($inserted) {
+                DB::commit();
+                return response()->json([
+                    'status'  => 'success',
+                    'message' => 'Thêm danh mục thành công!'
+                ]);
+            } else {
+                DB::rollBack();
+                return response()->json([
+                    'status'  => 'fail',
+                    'message' => 'Thêm danh mục thất bại!'
+                ]);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Có lỗi hệ thống: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    // Xóa danh mục
+    public function removeDM($id)
+    {
+        try {
+            DB::beginTransaction();
+            $deleted = DB::table('theloai')
+                        ->where('tl_id', $id)
+                        ->delete();
+            if ($deleted == 1) {
+                DB::commit();
+                return 1;
+            } else {
+                DB::rollBack();
+                return 0;
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return -1;
+        }
+    }
+    // Xóa tài khoản
+    public function removeTK($id)
+    {
+        try {
+            DB::beginTransaction();
+            $deleted = DB::table('taikhoan')
+                ->where('user_id', $id)
+                ->delete();
+            if ($deleted == 1) {
+                DB::commit();
+                return 1;
+            } else {
+                DB::rollBack();
+                return 0;
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return -1;
+        }
+    }
 
 }

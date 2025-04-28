@@ -52,7 +52,7 @@ class DonhangController extends Controller
                 return response()->json(['status' => 'success', 'message' => 'Cập nhật trạng thái thành công!']);
             }
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
+            return response()->json(['status' => 'error', 'message' => 'Có lỗi xảy ra: ']);
         }
     }
 }
