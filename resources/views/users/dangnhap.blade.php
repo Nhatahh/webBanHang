@@ -23,7 +23,7 @@
         </div>
         <hr class="w-50" />
         <div class="col-12 col-md-6 col-lg-4">
-          <form id="loginForm" action="{{ route('user.xulydangnhap') }}" method="POST" enctype="multipart/form-data">
+          <form id="loginForm" action="{{ route('user.xulydangnhap') }}" method="POST" enctype="multipart/form-data" novalidate>
             @csrf
             <input
               class="form-control mb-3"
@@ -41,6 +41,7 @@
               placeholder="* Mật Khẩu"
             />
             <span class="err_del" id="err_password" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+            <div id="errorMessage" style="color: red; font-weight: bold; text-align: center; margin-top: 10px;"></div>
             <div class="d-flex justify-content-between mb-3">
               <a href="#" style="text-decoration: none"
                 ><small id="quenMK" class="text-muted"

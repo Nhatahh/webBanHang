@@ -445,7 +445,7 @@ $(document).ready(function() {
             success: function (response) {
                 if (response.status === "success") {
                     toastr.success("Thêm tài khoản thành công!");
-                    table.ajax.reload();
+                    tableTaikhoan.ajax.reload();
                 } else if (response.status === "fail") {
                     toastr.error("Thêm tài khoản thất bại!");
                 }
@@ -473,9 +473,7 @@ $(document).ready(function() {
     $("#danhmucForm").submit(function(e) {
         e.preventDefault();
         $(".err_del").text("");
-
         var formData = new FormData(this);
-
         $.ajax({
             url: $(this).attr('action'),
             method: $(this).attr('method'),

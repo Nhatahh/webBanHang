@@ -86,11 +86,11 @@ class UserController extends Controller
                 'sp_id' => 'required',
             ]);
 
-            $user_id = 'U01'; // Tạm thời
+            $user_id = 1; // Tạm thời
             $size_id = [
-                'S' => 'S01',
-                'M' => 'M01',
-                'L' => 'L01',
+                'S' => 1,
+                'M' => 2,
+                'L' => 3,
             ][$validated['size']];
 
             $sanpham = DB::table('sanpham')->where('sp_id', $validated['sp_id'])->first();
@@ -166,7 +166,6 @@ class UserController extends Controller
                 'gh.soluong as soluong'
             )
             ->get();
-
         $tam_tinh = 0;
         foreach ($items as $item) {
             $tam_tinh += $item->gia * $item->soluong;
@@ -176,6 +175,7 @@ class UserController extends Controller
 
         return view('users.giohang', compact('items', 'tam_tinh', 'phi_ship', 'tong_tien', 'user_id'));
     }
+    
     public function membership() {
         return view('users.membership');
     }
@@ -223,19 +223,19 @@ class UserController extends Controller
     
             // $maxId = DB::table('taikhoan')->max('user_id');
             // $newId = $maxId ? 'U' . str_pad(((int) substr($maxId, 1)) + 1, 4, '0', STR_PAD_LEFT) : 'U0001';
-            $maxId = DB::table('taikhoan')->max(DB::raw('CAST(SUBSTRING(user_id, 2) AS UNSIGNED)'));
-            $newId = 'U' . str_pad($maxId + 1, 4, '0', STR_PAD_LEFT);
+            $maxId = DB::table('taikhoan')->max('user_id') ?? 0;
+            $newId = $maxId + 1;
             
             $data = [
                 'user_id'  => $newId,
                 'tenTK'    => $request->input('tenTK'),
                 'matkhau'  => $request->input('password'),
-                'quyen_id' => 'Q02',
+                'quyen_id' => 2,
                 'hoten'    => $request->input('fullname'),
                 'sdt'      => $request->input('phone'),
                 'diachi'   => $request->input('diachi'),
                 'email'    => $request->input('email'),
-                'tt_id'    => 'TT03',
+                'tt_id'    => 3,
             ];
     
             $inserted = DB::table('taikhoan')->insert($data);
