@@ -155,7 +155,7 @@ class AdminController extends Controller
                 'dmInput'   => 'required'
             ], [
                 // Các lỗi validate
-                'dmInput.required'    => 'Tên tài khoản không được để trống!',
+                'dmInput.required'    => 'Tên danh mục không được để trống!',
                 
             ]);
         

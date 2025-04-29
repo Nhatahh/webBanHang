@@ -47,6 +47,7 @@ class UserController extends Controller
         return $data;
     }
     public function home() {
+
         $sanphams = DB::table('sanpham')->get();
         return view('users.index', compact('sanphams'));
     }    
@@ -86,7 +87,11 @@ class UserController extends Controller
                 'sp_id' => 'required',
             ]);
 
-            $user_id = 1; // Tạm thời
+            $user = session('user');
+            if (!$user) {
+                return response()->json(['status' => 'error', 'message' => 'Bạn cần đăng nhập trước!'], 401);
+            }
+            $user_id = $user['id'];// Tạm thời
             $size_id = [
                 'S' => 1,
                 'M' => 2,
@@ -150,7 +155,11 @@ class UserController extends Controller
         return view('users.dangnhap');
     }
     public function giohang() {
-        $user_id = '1'; 
+        $user = session('user');
+            if (!$user) {
+                return response()->json(['status' => 'error', 'message' => 'Bạn cần đăng nhập trước!'], 401);
+            }
+        $user_id = $user['id'];
         $items = DB::table('giohang as gh')
             ->leftJoin('taikhoan as tk', 'tk.user_id', '=', 'gh.user_id')
             ->leftJoin('sanpham as sp', 'sp.sp_id', '=', 'gh.sp_id')
@@ -185,7 +194,7 @@ class UserController extends Controller
     public function chinhsach() {
         return view('users.chinhsach');
     }
-
+//đăng ký
     public function xulydangky(Request $request) {
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|string|max:255',
@@ -315,7 +324,11 @@ class UserController extends Controller
     // // Cap nhat so luong san pham
     public function capnhatSoluong(Request $request)
     {
-        $user_id = '1'; 
+        $user = session('user');
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'Bạn cần đăng nhập trước!'], 401);
+        }
+        $user_id = $user['id'];
         $size_id = $request->size;
         $sp_id = $request->sp_id;
         $quantity = $request->quantity;
@@ -335,7 +348,11 @@ class UserController extends Controller
     // Xoa san pham 
     public function xoaGioHang(Request $request)
     {
-        $user_id = '1';
+        $user = session('user');
+            if (!$user) {
+                return response()->json(['status' => 'error', 'message' => 'Bạn cần đăng nhập trước!'], 401);
+            }
+        $user_id = $user['id'];
         DB::table('giohang')
             ->where('user_id', $user_id)
             ->where('sp_id', $request->sp_id)

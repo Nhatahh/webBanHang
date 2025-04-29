@@ -356,7 +356,7 @@ $('#loginForm').on('submit', function(e) {
         processData: false,
         success: function(response) {
             if(response.status === "success") {
-               if(response.role==="Q02"){
+               if(response.role===2){
                     window.location.href='/admin/taikhoan'
                }else{
                     window.location.href='/user/home'

@@ -83,15 +83,15 @@ function initDataTable() {
                 data: null,
             },
             {
-                title: "dh_id",
+                title: "ID đơn hàng",
                 data: "dh_id",
             },
             {
-                title: "tentk",
+                title: "Tên tài khoản",
                 data: "tentk",
             },
             {
-                title: "tt",
+                title: "Trạng thái",
                 data: "tt_id",
                 render: function (data, type, row) {
                     let trangThaiOptions = "";
@@ -110,11 +110,11 @@ function initDataTable() {
                 },
             },
             {
-                title: "phuongthucthanhtoan",
+                title: "Phương thức thanh toán",
                 data: "ptthanhtoan_ten",
             },
             {
-                title: "created_at",
+                title: "Ngày dặt",
                 data: "created_at",
             },
             {
@@ -248,7 +248,7 @@ function loadChiTietDonHang(dh_id) {
 }
 
 //Bảng danh sách tài khoản
-var tableTaikhoan = $("#dsTaikhoan").DataTable({
+var tableTK = $("#dsTaikhoan").DataTable({
     ajax: {
         type: "get",
         url: loadTK,
@@ -445,7 +445,7 @@ $(document).ready(function() {
             success: function (response) {
                 if (response.status === "success") {
                     toastr.success("Thêm tài khoản thành công!");
-                    tableTaikhoan.ajax.reload();
+                    tableTK.ajax.reload();
                 } else if (response.status === "fail") {
                     toastr.error("Thêm tài khoản thất bại!");
                 }
