@@ -6,20 +6,21 @@
 <!-- Body -->
     <div class="col-md-10 main-content">
         <div class="row">
-            <!-- Form Thêm Danh Mục -->
+            <!-- Form Column -->
             <div class="col-md-3">
-                <div class="form-container mb-4"> 
-                    <form id="danhmucForm" action="{{ route('addDM') }}" method="POST" enctype="multipart/form-data">
+                <div class="form-container mb-4">
+                    <form id="danhmucForm" action="{{ route('admin.themDM') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="productName" class="form-label">Tên danh mục</label>
                             <input type="text" class="form-control" id="dmInput" name="dmInput">
                             <span class="err_del" id="err_dmInput" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary add-btn">Thêm</button>
+                        <button type="submit" class="btn btn-danger add-btn">Thêm</button>
                     </form>
                 </div>
             </div>
+
             <!-- Table Column -->
             <div class="col-md-9">
                 <div class="table-container">

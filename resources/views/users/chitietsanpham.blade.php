@@ -128,9 +128,9 @@
           </button>
           <input
             type="text"
-            class="form-control text-center CT-quantity"
+            class="form-control text-center quantity-input"
             name="soluong"
-            value="1"
+            value=""
           />
           <button class="btn btn-outline-secondary CT-plus" type="button">
             +
@@ -153,4 +153,5 @@
     </div>
   </div>
 </div>
+
 @endsection

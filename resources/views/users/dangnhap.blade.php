@@ -23,7 +23,7 @@
         </div>
         <hr class="w-50" />
         <div class="col-12 col-md-6 col-lg-4">
-          <form action="{{ route('user.xulydangnhap') }}" method="POST" novalidate>
+          <form id="loginForm" action="{{ route('user.xulydangnhap') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input
               class="form-control mb-3"
@@ -32,9 +32,7 @@
               value="{{ old('email') }}"
               placeholder="* Địa Chỉ Email"
             />
-            @error('email')
-              <p id="error-email" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
-            @enderror
+            <span class="err_del" id="err_email" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
             <input
               class="form-control mb-3"
               type="password"
@@ -42,9 +40,7 @@
               value="{{ old('password') }}"
               placeholder="* Mật Khẩu"
             />
-            @error('password')
-              <p id="error-password" class="text-danger mb-3 d-flex justify-content-end fw-bold" style="font-size: 12px; font-style: italic;">{{ $message }}</p>
-            @enderror
+            <span class="err_del" id="err_password" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
             <div class="d-flex justify-content-between mb-3">
               <a href="#" style="text-decoration: none"
                 ><small id="quenMK" class="text-muted"
