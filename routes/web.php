@@ -26,6 +26,12 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
 
+    Route::get('/donhang', [AdminController::class, 'donhang'])->name('admin.donhang');
+    Route::get('/donhang/danhsach', [AdminController::class, 'getDanhSach'])->name('admin.donhang.danhsach');
+    Route::get('/chitiet/{dh_id}', [AdminController::class, 'getChiTietDonHang'])->name('admin.donhang.chitiet');
+
+
+
     Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
     Route::get('/loadDM', [AdminController::class, 'loadDM'])->name('admin.loadDM');
 
@@ -34,7 +40,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/magiamgia', [AdminController::class, 'magiamgia'])->name('admin.magiamgia');
 
     Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
-    // Route::get('/addSP', [AdminController::class, 'addSP'])->name('admin.addSP');
     Route::get('/loadSP', [AdminController::class, 'loadSP'])->name('admin.loadSP');
 
     Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
@@ -65,6 +70,7 @@ Route::prefix('user')->group(function () {
     Route::get('/giohang', [UserController::class, 'giohang'])->name('user.giohang');
     Route::post('giohang/capnhat', [UserController::class, 'capnhatSoluong'])->name('user.giohang.capnhat'); 
     Route::post('giohang/xoa', [UserController::class, 'xoaGioHang'])->name('user.giohang.xoa');
+    Route::post('giohang/thanhtoan', [UserController::class, 'thanhtoan'])->name('user.giohang.thanhtoan');
 
 
     Route::get('/membership', [UserController::class, 'membership'])->name('user.membership');
@@ -78,5 +84,6 @@ Route::prefix('user')->group(function () {
     Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 
 });
+Route::get('/select2PTTT', [UserController::class, 'select2PTTT'])->name('select2PTTT');
 
 

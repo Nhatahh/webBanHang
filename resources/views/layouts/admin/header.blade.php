@@ -20,7 +20,7 @@
                     <i class="bi bi-box-seam sidebar-icon"></i>
                     Quản lý sản phẩm
                 </a>
-                <a href="" class="nav-link">
+                <a href="{{ route('admin.donhang') }}" class="nav-link">
                     <i class="bi bi-cart-fill sidebar-icon"></i>
                     Quản lý đơn hàng
                 </a>

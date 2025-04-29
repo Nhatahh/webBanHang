@@ -34,7 +34,7 @@
             style="--bs-scroll-height: 100px"
         >
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('user.giohang') }}">
+            <a class="nav-link" href="{{ route('user.tatcasp') }}">
                 SẢN PHẨM <i class="bi bi-chevron-compact-down"></i
             ></a>
             </li>

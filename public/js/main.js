@@ -4,7 +4,23 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+    load_bandau();
 });
+function load_bandau() {
+    select2PTTT();
+}
+
+function select2PTTT() {
+    $.ajax({
+        url: "/select2PTTT",
+        type: "get",
+        success: function (res) {
+            $("#select2PTTT").select2({
+                data: res,
+            });
+        },
+    });
+}
 
 // Cap nhat so luong san pham
 $(document).on("click", ".GH-minus, .GH-plus", function () {
@@ -163,58 +179,122 @@ function displaySearchResults(results) {
     }
 }
 
-// //thêm giỏ hàng 
-$('#formGioHang').submit(function(e) {
-  e.preventDefault();
-  var sizeSelected = $('input[name="size"]:checked').val();
-  if (!sizeSelected) {
-      toastr.warning('Vui lòng chọn size trước khi thêm vào giỏ hàng.');
-      return false; // Dừng lại, không gửi ajax
-  }
+// //thêm giỏ hàng
+$("#formGioHang").submit(function (e) {
+    e.preventDefault();
+    var sizeSelected = $('input[name="size"]:checked').val();
+    if (!sizeSelected) {
+        toastr.warning("Vui lòng chọn size trước khi thêm vào giỏ hàng.");
+        return false; // Dừng lại, không gửi ajax
+    }
 
-  var formData = $(this).serialize();
+    var formData = $(this).serialize();
 
-  $.ajax({
-      url: $(this).attr('action'),
-      type: 'POST',
-      data: formData,
-      success: function(response) {
-          console.log(response);
-          if (response.status === 'success') {
-              toastr.success(response.message); 
-              setTimeout(function() {
-                window.location.href = giohangURL;
-              }, 1500); 
-          } else if (response.status === 'error') {
-            toastr.warning(response.message); 
-          }
-          else {
-              toastr.error('Có lỗi xảy ra khi thêm vào giỏ hàng.'); 
-          }
-      },
-      error: function(xhr) {
-          toastr.error('Có lỗi xảy ra. Vui lòng thử lại.');
-      }
-  });
+    $.ajax({
+        url: $(this).attr("action"),
+        type: "POST",
+        data: formData,
+        success: function (response) {
+            console.log(response);
+            if (response.status === "success") {
+                toastr.success(response.message);
+                setTimeout(function () {
+                    window.location.href = giohangURL;
+                }, 1500);
+            } else if (response.status === "error") {
+                toastr.warning(response.message);
+            } else {
+                toastr.error("Có lỗi xảy ra khi thêm vào giỏ hàng.");
+            }
+        },
+        error: function (xhr) {
+            toastr.error("Có lỗi xảy ra. Vui lòng thử lại.");
+        },
+    });
 
-  return false;
+    return false;
 });
-$('.CT-quantity').on('input', function() {
-  this.value = this.value.replace(/[^0-9]/g, ''); // Chỉ cho nhập số
-  if (this.value === '0' || this.value === '') {
-      this.value = 1; 
-  }
+$(".CT-quantity").on("input", function () {
+    this.value = this.value.replace(/[^0-9]/g, ""); // Chỉ cho nhập số
+    if (this.value === "0" || this.value === "") {
+        this.value = 1;
+    }
 });
 // Tăng giảm số lượng
-$('.CT-plus').click(function() {
-  let input = $(this).siblings('.CT-quantity');
-  let value = parseInt(input.val()) || 0;
-  input.val(value + 1);
+$(".CT-plus").click(function () {
+    let input = $(this).siblings(".CT-quantity");
+    let value = parseInt(input.val()) || 0;
+    input.val(value + 1);
 });
-$('.CT-minus').click(function() {
-  let input = $(this).siblings('.CT-quantity');
-  let value = parseInt(input.val()) || 0;
-  if (value > 1) {
-    input.val(value - 1);
-  }
+$(".CT-minus").click(function () {
+    let input = $(this).siblings(".CT-quantity");
+    let value = parseInt(input.val()) || 0;
+    if (value > 1) {
+        input.val(value - 1);
+    }
+});
+
+// btn thanh toan
+$(document).on("click", "#btn-thanhtoan", function () {
+    let user_id = $(this).data("user_id");
+    let pttt_id = $("#select2PTTT").val();
+
+    if (pttt_id == 0) {
+        Swal.fire(
+            "Thông báo!",
+            "Vui lòng chọn phương thức thanh toán.",
+            "warning"
+        );
+        return;
+    }
+
+    Swal.fire({
+        title: "Xác nhận đặt hàng?",
+        text: "Bạn có chắc chắn muốn đặt hàng?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đặt hàng",
+        cancelButtonText: "Hủy",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            setTimeout(() => {
+                $.ajax({
+                    url: thanhtoanURL,
+                    method: "POST",
+                    data: {
+                        user_id: user_id,
+                        pttt_id: pttt_id,
+                    },
+                    success: function (response) {
+                        if (response.status === "success") {
+                            Swal.fire(
+                                "Thành công!",
+                                response.message,
+                                "success"
+                            ).then(() => {
+                                location.reload();
+                            });
+                        } else if (response.status === "error") {
+                            Swal.fire(
+                                "Thông báo!",
+                                response.message,
+                                "warning"
+                            );
+                        }
+                    },
+                    error: function () {
+                        Swal.fire(
+                            "Lỗi!",
+                            "Hệ thống bị lỗi, vui lòng thử lại!",
+                            "error"
+                        ).then(() => {
+                            location.reload();
+                        });
+                    },
+                });
+            }, 1000);
+        }
+    });
 });
