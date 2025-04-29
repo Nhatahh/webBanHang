@@ -251,7 +251,7 @@ class UserController extends Controller
             
             return response()->json([
                 'status' => 'error',
-                'message' => 'Có lỗi xảy ra: ' . $e->getMessage(),
+                'message' => 'Có lỗi xảy ra: ',
             ]);
         }
     }

@@ -53,9 +53,23 @@ function formatCurrency(amount) {
 }
 
 //Bảng danh sách đơn hàng
-$(document).ready(function () {
-    let DonhangURL = $("#donhang-table").data("url");
-
+const DonhangURL = $("#donhang-table").data("url");
+const TrangthaiURL = $("#donhang-table").data("trangthai-url");
+let trangThaiList = [];
+// Load trạng thái 1 lần rồi khởi tạo bảng
+$.ajax({
+    url: TrangthaiURL,
+    method: "GET",
+    success: function (response) {
+        trangThaiList = response.data;
+        window.trangThaiList = trangThaiList;
+        initDataTable();
+    },
+    error: function () {
+        Swal.fire("Lỗi", "Không thể tải danh sách trạng thái", "error");
+    },
+});
+function initDataTable() {
     var tableTK = $("#dsDonhang").DataTable({
         ajax: {
             type: "GET",
@@ -78,11 +92,26 @@ $(document).ready(function () {
             },
             {
                 title: "tt",
-                data: "tt",
+                data: "tt_id",
+                render: function (data, type, row) {
+                    let trangThaiOptions = "";
+
+                    window.trangThaiList.forEach(function (item) {
+                        trangThaiOptions += `<option value="${item.id}" ${
+                            item.id == data ? "selected" : ""
+                        }>${item.ten}</option>`;
+                    });
+
+                    return `
+                    <select class="form-control select2TT" data-dh_id="${row.dh_id}">
+                        ${trangThaiOptions}
+                    </select>
+                    `;
+                },
             },
             {
                 title: "phuongthucthanhtoan",
-                data: "phuongthucthanhtoan",
+                data: "ptthanhtoan_ten",
             },
             {
                 title: "created_at",
@@ -162,9 +191,34 @@ $(document).ready(function () {
             $("td:eq(0)", row).html(stt); // Gán STT vào cột đầu tiên
         },
     });
+}
+
+// Lắng nghe sự kiện thay đổi trạng thái
+$("#dsDonhang").on("change", ".select2TT", function () {
+    let dh_id = $(this).data("dh_id");
+    let newStatus = $(this).val();
+
+    $.ajax({
+        url: "/update-donhang-status", // URL để cập nhật trạng thái
+        method: "post",
+        data: {
+            dh_id: dh_id,
+            tt_id: newStatus,
+        },
+        success: function (response) {
+            if (response.status === "success") {
+                Swal.fire("Cập nhật thành công", response.message, "success");
+            } else {
+                Swal.fire("Lỗi", "Không thể cập nhật trạng thái", "error");
+            }
+        },
+        error: function () {
+            Swal.fire("Lỗi", "Không thể kết nối tới server", "error");
+        },
+    });
 });
 
-// Hàm load chi tiết đơn hàng khi nhấn vào một dòng
+// Hàm load chi tiết đơn hàng
 function loadChiTietDonHang(dh_id) {
     $.ajax({
         type: "GET",
@@ -246,7 +300,7 @@ var tableTK = $("#dsTaikhoan").DataTable({
                     <button id="btn-edit"  class="btn btn-edit" style="padding: 0">
                         <i style="color: #0000FF;" class="fa-regular fa-pen-to-square" onclick="btn_edit('${row.user_id}')"></i>
                     </button>
-                    <button id="btn-removeSingle" data-id="${row.user_id}" class="btn removeSingle" style="padding: 0">
+                    <button id="btn-removeSingle" data-id="${row.user_id}" class="btn removeSingleTK" style="padding: 0">
                         <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
                     </button>`;
             },
@@ -385,7 +439,7 @@ var tableSP = $("#dsSanpham").DataTable({
                     <button id="btn-edit"  class="btn btn-edit" style="padding: 0">
                         <i style="color: #0000FF;" class="fa-regular fa-pen-to-square" onclick="btn_edit('${row.sp_id}')"></i>
                     </button>
-                    <button id="btn-removeSingle" data-id="${row.sp_id}" class="btn removeSingle" style="padding: 0">
+                    <button id="btn-removeSingleSP" data-id="${row.sp_id}" class="btn removeSingleSP" style="padding: 0">
                         <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
                     </button>`;
             },
@@ -484,7 +538,7 @@ var tableDM = $("#dsDM").DataTable({
                     <button id="btn-edit"  class="btn btn-edit" style="padding: 0">
                         <i style="color: #0000FF;" class="fa-regular fa-pen-to-square" onclick="btn_edit('${row.tl_id}')"></i>
                     </button>
-                    <button id="btn-removeSingle" data-id="${row.tl_id}" class="btn removeSingle" style="padding: 0">
+                    <button id="btn-removeSingleDM" data-id="${row.tl_id}" class="btn removeSingleDM" style="padding: 0">
                         <i style="color: red;" class="fa-regular fa-trash-can" onclick=""></i> 
                     </button>`;
             },
@@ -542,6 +596,44 @@ var tableDM = $("#dsDM").DataTable({
     },
 });
 
+//Thêm danh mục
+$("#danhmucForm").submit(function (e) {
+    e.preventDefault();
+    $(".err_del").text("");
+
+    var formData = new FormData(this);
+
+    $.ajax({
+        url: $(this).attr("action"),
+        method: $(this).attr("method"),
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if (response.status === "success") {
+                toastr.success("Thêm danh mục thành công!");
+                tableDM.ajax.reload();
+            } else if (response.status === "fail") {
+                toastr.error("Thêm danh mục thất bại!");
+            }
+        },
+        error: function (xhr) {
+            if (xhr.status === 422) {
+                // Bắt lỗi validate
+                var errors = xhr.responseJSON.errors;
+                const keys = Object.keys(errors);
+                for (let i = 0; i < keys.length; i++) {
+                    const field = keys[i];
+                    const messages = errors[field];
+                    $("#err_" + field).text(messages[0]);
+                }
+            } else {
+                toastr.error("Có lỗi trong quá trình xử lý!");
+            }
+        },
+    });
+});
+
 //Thêm sản phẩm
 $("#addSP").on("click", function (e) {
     e.preventDefault();
@@ -589,8 +681,8 @@ $("#addSP").on("click", function (e) {
         },
     });
 });
-
-$(document).on("click", ".removeSingle", function () {
+// Xóa sản phẩm
+$(document).on("click", ".removeSingleSP", function () {
     var id = $(this).data("id");
 
     Swal.fire({
@@ -615,6 +707,82 @@ $(document).on("click", ".removeSingle", function () {
                             break;
                         case "0":
                             toastr.warning("Xóa sản phẩm thất bại!");
+                            break;
+                        default:
+                            toastr.error(
+                                "Hệ thống bị lỗi, vui lòng tải lại trang hoặc liên hệ quản trị viên!"
+                            );
+                            break;
+                    }
+                },
+            });
+        }
+    });
+});
+// Xóa danh mục
+$(document).on("click", ".removeSingleDM", function () {
+    var id = $(this).data("id");
+
+    Swal.fire({
+        title: "Bạn có chắc muốn xóa?",
+        text: "Hành động này không thể hoàn tác!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Có, xóa ngay!",
+        cancelButtonText: "Hủy",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/removeDM/${id}`,
+                type: "DELETE",
+                success: function (response) {
+                    switch (response) {
+                        case "1":
+                            toastr.success("Xóa danh mục thành công!");
+                            tableDM.ajax.reload();
+                            break;
+                        case "0":
+                            toastr.warning("Xóa danh mục thất bại!");
+                            break;
+                        default:
+                            toastr.error(
+                                "Hệ thống bị lỗi, vui lòng tải lại trang hoặc liên hệ quản trị viên!"
+                            );
+                            break;
+                    }
+                },
+            });
+        }
+    });
+});
+// Xóa tài khoản
+$(document).on("click", ".removeSingleTK", function () {
+    var id = $(this).data("id");
+
+    Swal.fire({
+        title: "Bạn có chắc muốn xóa?",
+        text: "Hành động này không thể hoàn tác!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Có, xóa ngay!",
+        cancelButtonText: "Hủy",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/removeTK/${id}`,
+                type: "DELETE",
+                success: function (response) {
+                    switch (response) {
+                        case "1":
+                            toastr.success("Xóa tài khoản thành công!");
+                            tableTK.ajax.reload();
+                            break;
+                        case "0":
+                            toastr.warning("Xóa tài khoản thất bại!");
                             break;
                         default:
                             toastr.error(

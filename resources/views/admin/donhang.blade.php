@@ -4,6 +4,10 @@
 
 @section('content')
 <!-- Body -->
+<div id="donhang-table"
+    data-url="{{ route('api.donhang.index') }}"
+    data-trangthai-url="{{ route('api.trangthai.index') }}" hidden>
+</div>
 <div class="col-md-10 main-content">
     <div class="table-container">
         <h5 class="mb-3">DANH SÁCH ĐƠN HÀNG</h5>

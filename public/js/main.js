@@ -211,9 +211,9 @@ $("#formGioHang").submit(function (e) {
             toastr.error("Có lỗi xảy ra. Vui lòng thử lại.");
         },
     });
-
     return false;
 });
+
 $(".CT-quantity").on("input", function () {
     this.value = this.value.replace(/[^0-9]/g, ""); // Chỉ cho nhập số
     if (this.value === "0" || this.value === "") {
